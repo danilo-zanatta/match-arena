@@ -3,22 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Springfield Memory Game</title>
+  <title>Springfield Memory Game V2</title>
   <style>
     * { box-sizing: border-box; }
 
     :root {
       --yellow: #ffd90f;
-      --yellow-strong: #f2c300;
-      --sky: #7fd3ff;
-      --sky-strong: #57bff7;
-      --cloud: rgba(255,255,255,0.94);
-      --glass: rgba(255,255,255,0.86);
-      --ink: #1f2937;
-      --muted: #4b5563;
+      --yellow-strong: #f5c400;
+      --sky: #7ed3ff;
+      --sky-strong: #53c0f7;
       --green: #16a34a;
       --red: #dc2626;
       --blue: #2563eb;
+      --ink: #1f2937;
+      --muted: #4b5563;
+      --glass: rgba(255,255,255,0.88);
+      --glass-strong: rgba(255,255,255,0.95);
       --shadow-lg: 0 18px 40px rgba(0,0,0,0.20);
       --shadow-md: 0 10px 24px rgba(0,0,0,0.14);
       --radius-xl: 28px;
@@ -32,23 +32,22 @@
       min-height: 100%;
       font-family: Arial, Helvetica, sans-serif;
       color: var(--ink);
-      scroll-behavior: smooth;
     }
 
     body {
       background:
-        linear-gradient(rgba(255,255,255,0.12), rgba(255,255,255,0.20)),
+        linear-gradient(rgba(255,255,255,0.12), rgba(255,255,255,0.22)),
         url("https://upload.wikimedia.org/wikipedia/pt/5/59/Springfield_%28The_Simpsons%29.png") center/cover fixed no-repeat;
     }
 
-    button, select {
+    button, input, select {
       font: inherit;
     }
 
     .page {
       min-height: 100vh;
-      padding: 20px;
-      backdrop-filter: blur(1.5px);
+      padding: 18px;
+      backdrop-filter: blur(1px);
     }
 
     .container {
@@ -61,18 +60,17 @@
       justify-content: space-between;
       gap: 16px;
       flex-wrap: wrap;
-      align-items: center;
-      margin-bottom: 18px;
+      margin-bottom: 16px;
     }
 
     .brand {
       display: flex;
-      gap: 14px;
       align-items: center;
-      background: var(--cloud);
-      border: 3px solid var(--yellow);
-      border-radius: 999px;
+      gap: 12px;
       padding: 10px 16px;
+      background: var(--glass-strong);
+      border-radius: 999px;
+      border: 3px solid var(--yellow);
       box-shadow: var(--shadow-md);
     }
 
@@ -82,43 +80,43 @@
       border-radius: 50%;
       display: grid;
       place-items: center;
-      background: linear-gradient(180deg, #9fe3ff, #ffe48d);
       font-size: 24px;
+      background: linear-gradient(180deg, #91deff, #ffe79d);
     }
 
     .brand-title {
-      font-size: 1.2rem;
+      font-size: 1.15rem;
       font-weight: 900;
-      line-height: 1.1;
+      line-height: 1.05;
     }
 
     .brand-subtitle {
+      font-size: 0.82rem;
       color: var(--muted);
-      font-size: 0.85rem;
-      margin-top: 2px;
+      margin-top: 3px;
     }
 
     .hero {
+      position: relative;
+      overflow: hidden;
       background: var(--glass);
       border: 4px solid var(--yellow);
       border-radius: var(--radius-xl);
       padding: 24px;
       box-shadow: var(--shadow-lg);
-      overflow: hidden;
-      position: relative;
     }
 
     .hero::before {
       content: "";
       position: absolute;
       inset: 0;
+      opacity: 0.32;
       pointer-events: none;
-      opacity: 0.38;
       background:
-        radial-gradient(circle at 12% 18%, rgba(255,255,255,0.9) 0 7%, transparent 8%),
-        radial-gradient(circle at 22% 18%, rgba(255,255,255,0.85) 0 7%, transparent 8%),
-        radial-gradient(circle at 77% 20%, rgba(255,255,255,0.88) 0 8%, transparent 9%),
-        radial-gradient(circle at 67% 20%, rgba(255,255,255,0.85) 0 7%, transparent 8%);
+        radial-gradient(circle at 10% 18%, rgba(255,255,255,0.92) 0 8%, transparent 9%),
+        radial-gradient(circle at 18% 20%, rgba(255,255,255,0.88) 0 7%, transparent 8%),
+        radial-gradient(circle at 80% 16%, rgba(255,255,255,0.90) 0 8%, transparent 9%),
+        radial-gradient(circle at 70% 18%, rgba(255,255,255,0.84) 0 7%, transparent 8%);
     }
 
     .hero-inner {
@@ -128,12 +126,11 @@
 
     .hero-grid {
       display: grid;
-      grid-template-columns: 1.3fr 0.9fr;
+      grid-template-columns: 1.35fr 0.9fr;
       gap: 18px;
-      align-items: start;
     }
 
-    .hero h1 {
+    h1 {
       margin: 0 0 8px;
       font-size: clamp(2rem, 3vw, 3rem);
       line-height: 1;
@@ -141,16 +138,16 @@
       letter-spacing: -0.03em;
     }
 
-    .hero p {
+    .subtitle {
       margin: 0;
-      color: var(--muted);
-      max-width: 820px;
       line-height: 1.5;
+      color: var(--muted);
+      max-width: 850px;
     }
 
     .stats {
       display: grid;
-      grid-template-columns: repeat(4, minmax(120px, 1fr));
+      grid-template-columns: repeat(6, minmax(120px, 1fr));
       gap: 12px;
       margin-top: 18px;
     }
@@ -159,44 +156,30 @@
       background: rgba(255,255,255,0.96);
       border: 2px solid var(--sky);
       border-radius: var(--radius-md);
-      padding: 14px 16px;
+      padding: 14px 14px;
       box-shadow: var(--shadow-md);
     }
 
     .stat-label {
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       text-transform: uppercase;
+      letter-spacing: 0.04em;
       color: var(--muted);
       font-weight: 800;
-      letter-spacing: 0.04em;
       margin-bottom: 6px;
     }
 
     .stat-value {
-      font-weight: 900;
-      font-size: 1.35rem;
-    }
-
-    .side-panel {
-      background: rgba(255,255,255,0.96);
-      border: 2px solid var(--sky);
-      border-radius: var(--radius-lg);
-      padding: 16px;
-      box-shadow: var(--shadow-md);
-    }
-
-    .side-panel h2 {
-      margin: 0 0 10px;
-      font-size: 1rem;
+      font-size: 1.28rem;
       font-weight: 900;
     }
 
     .toolbar {
       display: flex;
-      gap: 10px;
       flex-wrap: wrap;
-      align-items: center;
+      gap: 10px;
       margin-top: 16px;
+      align-items: center;
     }
 
     .btn {
@@ -212,34 +195,37 @@
     .btn:hover { transform: translateY(-1px); }
     .btn:active { transform: translateY(0); }
 
-    .btn-primary {
-      background: var(--yellow);
-      color: #111827;
+    .btn-primary { background: var(--yellow); color: #111827; }
+    .btn-primary:hover { background: var(--yellow-strong); }
+    .btn-secondary { background: var(--sky); color: #0f172a; }
+    .btn-secondary:hover { background: var(--sky-strong); }
+    .btn-ghost { background: #eef6ff; color: #0f172a; }
+
+    .side-panel,
+    .panel,
+    .board-shell {
+      background: rgba(255,255,255,0.9);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
     }
 
-    .btn-primary:hover {
-      background: var(--yellow-strong);
+    .side-panel {
+      border: 2px solid var(--sky);
+      padding: 16px;
     }
 
-    .btn-secondary {
-      background: var(--sky);
-      color: #0f172a;
-    }
-
-    .btn-secondary:hover {
-      background: var(--sky-strong);
-    }
-
-    .btn-ghost {
-      background: #eef6ff;
-      color: #0f172a;
+    .side-panel h2,
+    .panel h3 {
+      margin: 0 0 10px;
+      font-size: 1rem;
+      font-weight: 900;
     }
 
     .inline-controls {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 10px;
-      margin-top: 12px;
+      margin-top: 10px;
     }
 
     .field {
@@ -250,10 +236,11 @@
 
     .field label {
       font-size: 0.8rem;
-      font-weight: 800;
       color: var(--muted);
+      font-weight: 800;
     }
 
+    .field input,
     .field select {
       border: 2px solid #bae6fd;
       border-radius: 14px;
@@ -263,32 +250,31 @@
     }
 
     .rules {
-      margin-top: 14px;
-      padding: 12px 14px;
-      border-radius: 16px;
-      border: 2px dashed var(--yellow-strong);
+      margin-top: 12px;
       background: #fff8cc;
-      font-weight: 800;
+      border: 2px dashed var(--yellow-strong);
+      border-radius: 16px;
+      padding: 12px 14px;
       line-height: 1.5;
+      font-weight: 800;
     }
 
     .rules .positive { color: var(--green); }
     .rules .negative { color: var(--red); }
 
     .live-row {
-      margin-top: 16px;
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
       align-items: center;
+      margin-top: 16px;
       min-height: 52px;
     }
 
     .feedback {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      min-height: 44px;
+      gap: 8px;
       padding: 10px 14px;
       border-radius: 999px;
       font-weight: 900;
@@ -321,10 +307,8 @@
     }
 
     .board-shell {
-      margin-top: 22px;
-      background: rgba(255,255,255,0.85);
+      margin-top: 20px;
       border: 4px solid var(--yellow);
-      border-radius: var(--radius-xl);
       padding: 18px;
       box-shadow: var(--shadow-lg);
     }
@@ -336,13 +320,13 @@
     }
 
     .card {
-      position: relative;
-      height: 178px;
+      height: 182px;
       border: none;
-      background: transparent;
       padding: 0;
+      background: transparent;
       cursor: pointer;
       perspective: 1000px;
+      position: relative;
     }
 
     .card[disabled] {
@@ -350,9 +334,9 @@
     }
 
     .card-inner {
-      position: relative;
       width: 100%;
       height: 100%;
+      position: relative;
       transform-style: preserve-3d;
       transition: transform 0.55s ease;
     }
@@ -365,9 +349,9 @@
     .card-face {
       position: absolute;
       inset: 0;
-      backface-visibility: hidden;
       border-radius: 20px;
       overflow: hidden;
+      backface-visibility: hidden;
       border: 4px solid var(--sky);
       box-shadow: var(--shadow-md);
     }
@@ -376,32 +360,31 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 2.7rem;
+      font-size: 2.8rem;
       background:
-        radial-gradient(circle at 26% 20%, rgba(255,255,255,0.92) 0 9%, transparent 10%),
-        radial-gradient(circle at 75% 24%, rgba(255,255,255,0.9) 0 9%, transparent 10%),
-        linear-gradient(180deg, #89dcff 0%, #c8efff 52%, #ffe8a0 100%);
+        radial-gradient(circle at 25% 18%, rgba(255,255,255,0.94) 0 8%, transparent 9%),
+        radial-gradient(circle at 72% 22%, rgba(255,255,255,0.90) 0 8%, transparent 9%),
+        linear-gradient(180deg, #8bddff 0%, #c8efff 50%, #ffe7a3 100%);
     }
 
     .card-back {
       transform: rotateY(180deg);
       display: flex;
       flex-direction: column;
-      background: #fff;
       background: linear-gradient(180deg, #fff7cc 0%, #ffffff 100%);
     }
 
     .card-back img {
       width: 100%;
-      height: 128px;
+      height: 134px;
       object-fit: contain;
       object-position: center;
-      background: #fff6b3;
+      background: transparent;
       padding: 6px;
     }
 
     .card-name {
-      min-height: 36px;
+      min-height: 40px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -410,6 +393,11 @@
       font-size: 11px;
       font-weight: 800;
       line-height: 1.15;
+      background: #fff;
+    }
+
+    .card.matched {
+      animation: matchPulse 0.38s ease;
     }
 
     .card.matched .card-face {
@@ -417,32 +405,39 @@
       box-shadow: 0 12px 24px rgba(34, 197, 94, 0.22);
     }
 
+    .card.error {
+      animation: shake 0.32s ease;
+    }
+
+    @keyframes matchPulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.06); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+
     .footer {
       margin-top: 20px;
       display: grid;
-      grid-template-columns: 1fr 280px;
+      grid-template-columns: 1fr 320px;
       gap: 18px;
     }
 
     .panel {
-      background: rgba(255,255,255,0.9);
       border: 3px solid var(--yellow);
-      border-radius: 22px;
       padding: 16px;
-      box-shadow: var(--shadow-md);
-    }
-
-    .panel h3 {
-      margin: 0 0 10px;
-      font-size: 1rem;
-      font-weight: 900;
     }
 
     .panel p,
     .panel li {
+      margin: 0;
       color: var(--muted);
       line-height: 1.5;
-      margin: 0;
     }
 
     .rank-list {
@@ -459,9 +454,9 @@
       gap: 8px;
       align-items: center;
       padding: 10px 12px;
-      border-radius: 14px;
       background: #f8fafc;
       border: 2px solid #dbeafe;
+      border-radius: 14px;
       font-weight: 800;
     }
 
@@ -481,14 +476,14 @@
       align-items: center;
       justify-content: center;
       padding: 20px;
-      background: rgba(15,23,42,0.56);
+      background: rgba(15,23,42,0.58);
     }
 
     .hidden { display: none; }
 
     .overlay-card,
     .modal-card {
-      width: min(760px, 100%);
+      width: min(820px, 100%);
       background: rgba(255,255,255,0.97);
       border: 4px solid var(--yellow);
       border-radius: 30px;
@@ -497,10 +492,10 @@
       text-align: center;
     }
 
-    .overlay-card h1,
+    .overlay-card h2,
     .modal-card h2 {
       margin: 0 0 12px;
-      font-size: clamp(2rem, 3vw, 2.8rem);
+      font-size: clamp(2rem, 3vw, 2.7rem);
       line-height: 1;
       font-weight: 900;
     }
@@ -508,16 +503,19 @@
     .overlay-card p,
     .modal-card p {
       margin: 0;
-      color: var(--muted);
       line-height: 1.55;
+      color: var(--muted);
     }
 
-    .start-rules {
+    .start-grid,
+    .summary-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
       gap: 12px;
       margin: 22px 0;
     }
+
+    .start-grid { grid-template-columns: repeat(3, 1fr); }
+    .summary-grid { grid-template-columns: repeat(5, 1fr); }
 
     .start-card,
     .summary-card {
@@ -531,15 +529,8 @@
     .start-card strong,
     .summary-card strong {
       display: block;
-      font-size: 1.2rem;
-      margin-top: 4px;
-    }
-
-    .summary-grid {
-      margin: 22px 0;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
+      margin-top: 5px;
+      font-size: 1.15rem;
     }
 
     .tiny-note {
@@ -548,25 +539,22 @@
       color: var(--muted);
     }
 
-    @media (max-width: 1100px) {
+    @media (max-width: 1150px) {
       .hero-grid,
       .footer {
         grid-template-columns: 1fr;
       }
-
-      .board {
-        grid-template-columns: repeat(4, minmax(120px, 1fr));
-      }
+      .stats { grid-template-columns: repeat(3, 1fr); }
     }
 
-    @media (max-width: 760px) {
+    @media (max-width: 780px) {
       .page { padding: 14px; }
-      .hero, .board-shell, .panel { padding: 16px; }
-      .stats { grid-template-columns: repeat(2, 1fr); }
+      .hero, .board-shell, .panel, .side-panel { padding: 16px; }
       .board { grid-template-columns: repeat(3, minmax(92px, 1fr)); gap: 12px; }
-      .card { height: 150px; }
-      .card-back img { height: 106px; }
-      .start-rules, .summary-grid, .inline-controls { grid-template-columns: 1fr; }
+      .card { height: 156px; }
+      .card-back img { height: 110px; }
+      .start-grid, .summary-grid, .inline-controls { grid-template-columns: 1fr; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
     }
 
     @media (max-width: 520px) {
@@ -579,34 +567,36 @@
 <body>
   <div class="overlay" id="startScreen">
     <div class="overlay-card">
-      <h1>Springfield Memory Game</h1>
+      <h2>Springfield Memory Game V2</h2>
       <p>
-        Uma versão mais completa e pronta para publicação: visual mais polido, pontuação,
-        feedback imediato, ranking local, níveis de dificuldade, replay e cartas com personagens.
+        Versão 2 com visual mais forte, combo, ranking local com nome do jogador,
+        dificuldade, modo contra o tempo, replay e feedback visual aprimorado.
       </p>
 
-      <div class="start-rules">
-        <div class="start-card">
-          Regra de acerto
-          <strong style="color:#166534;">+5 pontos</strong>
-        </div>
-        <div class="start-card">
-          Regra de erro
-          <strong style="color:#991b1b;">-1 ponto</strong>
-        </div>
-        <div class="start-card">
-          Objetivo
-          <strong>encontrar todos os pares</strong>
-        </div>
+      <div class="start-grid">
+        <div class="start-card">Acerto<strong style="color:#166534;">+5 pontos</strong></div>
+        <div class="start-card">Erro<strong style="color:#991b1b;">-1 ponto</strong></div>
+        <div class="start-card">Combo<strong>bônus por sequência</strong></div>
       </div>
 
-      <div class="inline-controls" style="margin-bottom:18px; text-align:left;">
+      <div class="inline-controls" style="text-align:left; margin-bottom: 16px;">
+        <div class="field">
+          <label for="playerNameStart">Nome do jogador</label>
+          <input id="playerNameStart" maxlength="18" placeholder="Digite seu nome" />
+        </div>
         <div class="field">
           <label for="difficultyStart">Dificuldade</label>
           <select id="difficultyStart">
             <option value="easy">Fácil (10 pares)</option>
             <option value="medium" selected>Médio (15 pares)</option>
             <option value="hard">Difícil (20 pares)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="modeStart">Modo</label>
+          <select id="modeStart">
+            <option value="classic" selected>Clássico</option>
+            <option value="timed">Contra o tempo</option>
           </select>
         </div>
         <div class="field">
@@ -619,25 +609,26 @@
       </div>
 
       <button class="btn btn-primary" id="startBtn">Iniciar jogo</button>
-      <div class="tiny-note">As melhores pontuações ficam salvas no navegador do próprio jogador.</div>
+      <div class="tiny-note">O top 10 fica salvo no navegador de cada pessoa que jogar.</div>
     </div>
   </div>
 
   <div class="modal hidden" id="winModal">
     <div class="modal-card">
-      <h2>Você venceu! 🎉</h2>
-      <p>Todos os pares foram encontrados. Confira seu resultado final.</p>
+      <h2 id="resultTitle">Resultado final</h2>
+      <p id="resultText">Confira seu desempenho.</p>
 
       <div class="summary-grid">
+        <div class="summary-card">Jogador<strong id="finalPlayer">-</strong></div>
         <div class="summary-card">Jogadas<strong id="finalMoves">0</strong></div>
         <div class="summary-card">Pontos<strong id="finalScore">0</strong></div>
         <div class="summary-card">Tempo<strong id="finalTime">00:00</strong></div>
-        <div class="summary-card">Pares<strong id="finalPairs">0/0</strong></div>
+        <div class="summary-card">Combo máx<strong id="finalCombo">0</strong></div>
       </div>
 
       <div class="toolbar" style="justify-content:center;">
         <button class="btn btn-primary" id="playAgainBtn">Jogar novamente</button>
-        <button class="btn btn-secondary" id="closeWinBtn">Fechar</button>
+        <button class="btn btn-secondary" id="closeResultBtn">Fechar</button>
       </div>
     </div>
   </div>
@@ -649,7 +640,7 @@
           <div class="brand-icon">☁️</div>
           <div>
             <div class="brand-title">Springfield Memory Game</div>
-            <div class="brand-subtitle">Versão pública com visual aprimorado</div>
+            <div class="brand-subtitle">Versão 2 profissional</div>
           </div>
         </div>
       </div>
@@ -658,38 +649,28 @@
         <div class="hero-inner">
           <div class="hero-grid">
             <div>
-              <h1>Encontre os pares em Springfield</h1>
-              <p>
-                O objetivo é localizar todos os pares de personagens com o menor número de erros possível.
-                Cada acerto soma pontos e cada erro reduz a pontuação.
+              <h1>Encontre os pares e maximize sua pontuação</h1>
+              <p class="subtitle">
+                Cada acerto vale 5 pontos. Erros retiram 1 ponto. Sequências de acertos aumentam o combo e adicionam bônus.
               </p>
 
               <div class="stats">
-                <div class="stat-card">
-                  <div class="stat-label">Jogadas</div>
-                  <div class="stat-value" id="moves">0</div>
-                </div>
-                <div class="stat-card">
-                  <div class="stat-label">Pares</div>
-                  <div class="stat-value"><span id="matches">0</span>/<span id="totalPairs">20</span></div>
-                </div>
-                <div class="stat-card">
-                  <div class="stat-label">Tempo</div>
-                  <div class="stat-value" id="time">00:00</div>
-                </div>
-                <div class="stat-card">
-                  <div class="stat-label">Pontos</div>
-                  <div class="stat-value" id="score">0</div>
-                </div>
+                <div class="stat-card"><div class="stat-label">Jogador</div><div class="stat-value" id="playerDisplay">Visitante</div></div>
+                <div class="stat-card"><div class="stat-label">Jogadas</div><div class="stat-value" id="moves">0</div></div>
+                <div class="stat-card"><div class="stat-label">Pares</div><div class="stat-value"><span id="matches">0</span>/<span id="totalPairs">20</span></div></div>
+                <div class="stat-card"><div class="stat-label">Tempo</div><div class="stat-value" id="time">00:00</div></div>
+                <div class="stat-card"><div class="stat-label">Pontos</div><div class="stat-value" id="score">0</div></div>
+                <div class="stat-card"><div class="stat-label">Combo</div><div class="stat-value" id="combo">x0</div></div>
               </div>
 
               <div class="toolbar">
                 <button class="btn btn-primary" id="restartBtn">Reiniciar</button>
-                <button class="btn btn-secondary" id="reopenStartBtn">Configurações</button>
+                <button class="btn btn-secondary" id="configBtn">Configurações</button>
               </div>
 
               <div class="rules">
-                Regra do jogo: <span class="positive">+5 por acerto</span> | <span class="negative">-1 por erro</span>
+                Regras: <span class="positive">+5 por acerto</span> | <span class="negative">-1 por erro</span> |
+                bônus de combo = <span class="positive">+2 por acerto consecutivo após o primeiro</span>
               </div>
 
               <div class="live-row">
@@ -700,8 +681,11 @@
 
             <aside class="side-panel">
               <h2>Configuração atual</h2>
-
               <div class="inline-controls">
+                <div class="field">
+                  <label for="playerName">Nome</label>
+                  <input id="playerName" maxlength="18" placeholder="Nome do jogador" />
+                </div>
                 <div class="field">
                   <label for="difficultySelect">Dificuldade</label>
                   <select id="difficultySelect">
@@ -710,7 +694,13 @@
                     <option value="hard">Difícil</option>
                   </select>
                 </div>
-
+                <div class="field">
+                  <label for="modeSelect">Modo</label>
+                  <select id="modeSelect">
+                    <option value="classic" selected>Clássico</option>
+                    <option value="timed">Contra o tempo</option>
+                  </select>
+                </div>
                 <div class="field">
                   <label for="soundSelect">Som</label>
                   <select id="soundSelect">
@@ -719,9 +709,8 @@
                   </select>
                 </div>
               </div>
-
-              <div class="rules" style="margin-top:12px;">
-                Ranking local: o jogo salva automaticamente as 5 melhores pontuações no navegador.
+              <div class="rules">
+                No modo contra o tempo, o relógio começa em 120 segundos e termina quando zerar.
               </div>
             </aside>
           </div>
@@ -734,16 +723,14 @@
 
       <section class="footer">
         <div class="panel">
-          <h3>Observações de publicação</h3>
+          <h3>Versão pública</h3>
           <p>
-            Esta versão foi mantida em um único arquivo HTML para facilitar hospedagem no GitHub Pages sem build.
-            Para ficar ainda mais profissional, depois você pode trocar as imagens provisórias por artes próprias e
-            substituir o fundo por outro cenário de Springfield.
+            Esta edição já tem estrutura de produto casual: loop mais envolvente, identidade visual melhor, ranking local e configurações.
+            O próximo nível seria usar assets próprios e um ranking online compartilhado.
           </p>
         </div>
-
         <div class="panel">
-          <h3>Top 5 pontuações</h3>
+          <h3>Top 10 local</h3>
           <ul class="rank-list" id="rankingList"></ul>
         </div>
       </section>
@@ -781,48 +768,62 @@
     };
 
     const board = document.getElementById("board");
+    const rankingList = document.getElementById("rankingList");
     const movesEl = document.getElementById("moves");
     const matchesEl = document.getElementById("matches");
     const totalPairsEl = document.getElementById("totalPairs");
     const timeEl = document.getElementById("time");
     const scoreEl = document.getElementById("score");
+    const comboEl = document.getElementById("combo");
+    const playerDisplay = document.getElementById("playerDisplay");
     const messageEl = document.getElementById("message");
     const feedbackBadge = document.getElementById("feedbackBadge");
-    const rankingList = document.getElementById("rankingList");
 
     const startScreen = document.getElementById("startScreen");
     const startBtn = document.getElementById("startBtn");
+    const configBtn = document.getElementById("configBtn");
+
+    const playerNameStart = document.getElementById("playerNameStart");
     const difficultyStart = document.getElementById("difficultyStart");
+    const modeStart = document.getElementById("modeStart");
     const soundStart = document.getElementById("soundStart");
 
+    const playerName = document.getElementById("playerName");
     const difficultySelect = document.getElementById("difficultySelect");
+    const modeSelect = document.getElementById("modeSelect");
     const soundSelect = document.getElementById("soundSelect");
 
     const restartBtn = document.getElementById("restartBtn");
-    const reopenStartBtn = document.getElementById("reopenStartBtn");
 
     const winModal = document.getElementById("winModal");
     const playAgainBtn = document.getElementById("playAgainBtn");
-    const closeWinBtn = document.getElementById("closeWinBtn");
+    const closeResultBtn = document.getElementById("closeResultBtn");
+    const resultTitle = document.getElementById("resultTitle");
+    const resultText = document.getElementById("resultText");
+    const finalPlayer = document.getElementById("finalPlayer");
     const finalMoves = document.getElementById("finalMoves");
     const finalScore = document.getElementById("finalScore");
     const finalTime = document.getElementById("finalTime");
-    const finalPairs = document.getElementById("finalPairs");
+    const finalCombo = document.getElementById("finalCombo");
 
-    let activeCharacters = [];
     let deck = [];
+    let activeCharacters = [];
     let firstCard = null;
     let secondCard = null;
     let lockBoard = false;
+    let started = false;
+    let gameEnabled = false;
     let moves = 0;
     let matches = 0;
     let score = 0;
+    let combo = 0;
+    let maxCombo = 0;
     let seconds = 0;
     let timer = null;
-    let started = false;
-    let gameEnabled = false;
     let soundEnabled = true;
     let currentDifficulty = "medium";
+    let currentMode = "classic";
+    let currentPlayer = "Visitante";
 
     function shuffle(array) {
       const cloned = [...array];
@@ -847,21 +848,20 @@
       return characters.slice(0, getTotalPairs());
     }
 
+    function getInitialTime() {
+      return currentMode === "timed" ? 120 : 0;
+    }
+
     function updateBoardColumns() {
-      const pairs = getTotalPairs();
-      if (pairs <= 10) {
-        board.style.gridTemplateColumns = window.innerWidth <= 760
-          ? "repeat(2, minmax(120px, 1fr))"
-          : "repeat(5, minmax(120px, 1fr))";
-      } else if (pairs <= 15) {
-        board.style.gridTemplateColumns = window.innerWidth <= 760
-          ? "repeat(3, minmax(92px, 1fr))"
-          : "repeat(5, minmax(120px, 1fr))";
-      } else {
-        board.style.gridTemplateColumns = window.innerWidth <= 760
-          ? "repeat(2, minmax(120px, 1fr))"
-          : "repeat(5, minmax(120px, 1fr))";
+      if (window.innerWidth <= 520) {
+        board.style.gridTemplateColumns = "repeat(2, minmax(120px, 1fr))";
+        return;
       }
+      if (window.innerWidth <= 780) {
+        board.style.gridTemplateColumns = "repeat(3, minmax(92px, 1fr))";
+        return;
+      }
+      board.style.gridTemplateColumns = "repeat(5, minmax(120px, 1fr))";
     }
 
     function updateStats() {
@@ -869,13 +869,26 @@
       matchesEl.textContent = matches;
       totalPairsEl.textContent = getTotalPairs();
       scoreEl.textContent = score;
+      comboEl.textContent = `x${combo}`;
+      playerDisplay.textContent = currentPlayer;
     }
 
     function startTimer() {
       if (timer) return;
       timer = setInterval(() => {
-        seconds++;
-        timeEl.textContent = formatTime(seconds);
+        if (currentMode === "timed") {
+          seconds--;
+          timeEl.textContent = formatTime(seconds);
+          if (seconds <= 0) {
+            seconds = 0;
+            timeEl.textContent = "00:00";
+            stopTimer();
+            endGame(false);
+          }
+        } else {
+          seconds++;
+          timeEl.textContent = formatTime(seconds);
+        }
       }, 1000);
     }
 
@@ -888,14 +901,9 @@
       if (!soundEnabled) return;
       const AudioCtx = window.AudioContext || window.webkitAudioContext;
       if (!AudioCtx) return;
-
-      if (!window._audioCtx) {
-        window._audioCtx = new AudioCtx();
-      }
-
+      if (!window._audioCtx) window._audioCtx = new AudioCtx();
       const ctx = window._audioCtx;
       if (ctx.state === "suspended") ctx.resume();
-
       const oscillator = ctx.createOscillator();
       const gainNode = ctx.createGain();
       oscillator.type = type;
@@ -908,20 +916,15 @@
       oscillator.stop(ctx.currentTime + duration);
     }
 
-    function soundFlip() {
-      playTone(520, 0.08, "triangle", 0.03);
-    }
-
+    function soundFlip() { playTone(520, 0.08, "triangle", 0.03); }
     function soundMatch() {
       playTone(660, 0.09, "sine", 0.05);
       setTimeout(() => playTone(880, 0.11, "sine", 0.05), 80);
     }
-
     function soundMismatch() {
       playTone(220, 0.12, "sawtooth", 0.03);
       setTimeout(() => playTone(180, 0.16, "sawtooth", 0.025), 70);
     }
-
     function soundWin() {
       playTone(523, 0.1, "triangle", 0.04);
       setTimeout(() => playTone(659, 0.1, "triangle", 0.04), 100);
@@ -931,68 +934,51 @@
     function showFeedback(type, text) {
       feedbackBadge.className = `feedback ${type} show`;
       feedbackBadge.textContent = text;
-      setTimeout(() => {
-        feedbackBadge.classList.remove("show");
-      }, 850);
+      setTimeout(() => feedbackBadge.classList.remove("show"), 900);
     }
 
     function createDeck() {
       activeCharacters = getSelectedCharacters();
-      return shuffle(
-        activeCharacters.flatMap((character) => [
-          {
-            uid: `${character.id}-a`,
-            pairId: character.id,
-            name: character.name,
-            image: character.image
-          },
-          {
-            uid: `${character.id}-b`,
-            pairId: character.id,
-            name: character.name,
-            image: character.image
-          }
-        ])
-      );
+      return shuffle(activeCharacters.flatMap((character) => [
+        { uid: `${character.id}-a`, pairId: character.id, name: character.name, image: character.image },
+        { uid: `${character.id}-b`, pairId: character.id, name: character.name, image: character.image }
+      ]));
     }
 
-    function saveRanking() {
-      const key = "springfield-memory-ranking";
-      const existing = JSON.parse(localStorage.getItem(key) || "[]");
-      existing.push({
-        score,
-        moves,
-        time: seconds,
-        difficulty: currentDifficulty,
-        date: new Date().toLocaleDateString("pt-BR")
-      });
+    function syncSettingsUI() {
+      playerName.value = currentPlayer === "Visitante" ? "" : currentPlayer;
+      playerNameStart.value = currentPlayer === "Visitante" ? "" : currentPlayer;
+      difficultySelect.value = currentDifficulty;
+      difficultyStart.value = currentDifficulty;
+      modeSelect.value = currentMode;
+      modeStart.value = currentMode;
+      soundSelect.value = soundEnabled ? "on" : "off";
+      soundStart.value = soundEnabled ? "on" : "off";
+    }
 
-      existing.sort((a, b) => {
-        if (b.score !== a.score) return b.score - a.score;
-        if (a.moves !== b.moves) return a.moves - b.moves;
-        return a.time - b.time;
-      });
-
-      localStorage.setItem(key, JSON.stringify(existing.slice(0, 5)));
-      renderRanking();
+    function applySettings(fromStart = false) {
+      const nameValue = (fromStart ? playerNameStart.value : playerName.value).trim();
+      currentPlayer = nameValue || "Visitante";
+      currentDifficulty = fromStart ? difficultyStart.value : difficultySelect.value;
+      currentMode = fromStart ? modeStart.value : modeSelect.value;
+      soundEnabled = (fromStart ? soundStart.value : soundSelect.value) === "on";
+      syncSettingsUI();
     }
 
     function renderRanking() {
-      const items = JSON.parse(localStorage.getItem("springfield-memory-ranking") || "[]");
+      const items = JSON.parse(localStorage.getItem("springfield-memory-ranking-v2") || "[]");
       rankingList.innerHTML = "";
-
       if (!items.length) {
-        rankingList.innerHTML = `<li class="rank-item"><div>Nenhuma pontuação ainda<small>Jogue para criar o ranking</small></div><strong>--</strong></li>`;
+        rankingList.innerHTML = `<li class="rank-item"><div>Nenhuma pontuação ainda<small>Jogue para popular o ranking</small></div><strong>--</strong></li>`;
         return;
       }
-
       items.forEach((item, index) => {
         const li = document.createElement("li");
         li.className = "rank-item";
         li.innerHTML = `
           <div>
-            #${index + 1} · ${item.difficulty}
-            <small>${item.moves} jogadas · ${formatTime(item.time)} · ${item.date}</small>
+            #${index + 1} · ${item.player}
+            <small>${item.difficulty} · ${item.mode} · ${item.moves} jogadas · ${formatTime(item.time)}${item.result === 'lose' ? ' · tempo esgotado' : ''}</small>
           </div>
           <strong>${item.score}</strong>
         `;
@@ -1000,21 +986,59 @@
       });
     }
 
-    function openWinModal() {
+    function saveRanking(result) {
+      const key = "springfield-memory-ranking-v2";
+      const items = JSON.parse(localStorage.getItem(key) || "[]");
+      items.push({
+        player: currentPlayer,
+        difficulty: currentDifficulty,
+        mode: currentMode,
+        moves,
+        time: currentMode === "timed" ? (getInitialTime() - seconds) : seconds,
+        score,
+        combo: maxCombo,
+        result,
+        date: new Date().toLocaleDateString("pt-BR")
+      });
+      items.sort((a, b) => {
+        if (b.score !== a.score) return b.score - a.score;
+        if (a.moves !== b.moves) return a.moves - b.moves;
+        return a.time - b.time;
+      });
+      localStorage.setItem(key, JSON.stringify(items.slice(0, 10)));
+      renderRanking();
+    }
+
+    function openResultModal(title, text) {
+      resultTitle.textContent = title;
+      resultText.textContent = text;
+      finalPlayer.textContent = currentPlayer;
       finalMoves.textContent = moves;
       finalScore.textContent = score;
-      finalTime.textContent = formatTime(seconds);
-      finalPairs.textContent = `${matches}/${getTotalPairs()}`;
+      finalTime.textContent = formatTime(currentMode === "timed" ? (getInitialTime() - seconds) : seconds);
+      finalCombo.textContent = maxCombo;
       winModal.classList.remove("hidden");
+    }
+
+    function endGame(win) {
+      gameEnabled = false;
+      stopTimer();
+      if (win) {
+        messageEl.textContent = `Parabéns, ${currentPlayer}! Você concluiu com ${score} pontos.`;
+        soundWin();
+        saveRanking("win");
+        setTimeout(() => openResultModal("Você venceu! 🎉", "Todos os pares foram encontrados com sucesso."), 350);
+      } else {
+        messageEl.textContent = `Tempo esgotado, ${currentPlayer}. Tente novamente.`;
+        showFeedback("error", "Fim de jogo");
+        saveRanking("lose");
+        setTimeout(() => openResultModal("Fim de jogo ⏱️", "O tempo terminou antes de todos os pares serem encontrados."), 350);
+      }
     }
 
     function checkWin() {
       if (matches === getTotalPairs()) {
-        stopTimer();
-        messageEl.textContent = `Parabéns! Você concluiu com ${score} pontos.`;
-        soundWin();
-        saveRanking();
-        setTimeout(openWinModal, 450);
+        endGame(true);
       }
     }
 
@@ -1022,6 +1046,13 @@
       firstCard = null;
       secondCard = null;
       lockBoard = false;
+    }
+
+    function markErrorAnimation(...elements) {
+      elements.forEach((el) => {
+        el.classList.add("error");
+        setTimeout(() => el.classList.remove("error"), 340);
+      });
     }
 
     function handleCardClick(cardElement, cardData) {
@@ -1052,20 +1083,26 @@
         firstCard.element.classList.add("matched");
         secondCard.element.classList.add("matched");
         matches++;
-        score += 5;
+        combo++;
+        if (combo > maxCombo) maxCombo = combo;
+        const comboBonus = combo > 1 ? (combo - 1) * 2 : 0;
+        score += 5 + comboBonus;
         updateStats();
-        messageEl.textContent = "Boa! Você encontrou um par.";
-        showFeedback("success", "Acerto! +5 pontos");
+        messageEl.textContent = comboBonus > 0
+          ? `Excelente! Combo x${combo} gerou bônus de +${comboBonus}.`
+          : "Boa! Você encontrou um par.";
+        showFeedback("success", comboBonus > 0 ? `Acerto! +${5 + comboBonus} pontos` : "Acerto! +5 pontos");
         soundMatch();
         resetSelection();
         checkWin();
       } else {
         score -= 1;
+        combo = 0;
         updateStats();
         messageEl.textContent = "Não foi dessa vez. Continue tentando.";
         showFeedback("error", "Erro! -1 ponto");
         soundMismatch();
-
+        markErrorAnimation(firstCard.element, secondCard.element);
         setTimeout(() => {
           firstCard.element.classList.remove("flipped");
           secondCard.element.classList.remove("flipped");
@@ -1079,7 +1116,6 @@
       button.className = "card";
       button.type = "button";
       button.setAttribute("aria-label", `Carta do personagem ${cardData.name}`);
-
       button.innerHTML = `
         <div class="card-inner">
           <div class="card-face card-front">☁️</div>
@@ -1089,7 +1125,6 @@
           </div>
         </div>
       `;
-
       button.addEventListener("click", () => handleCardClick(button, cardData));
       return button;
     }
@@ -1100,32 +1135,21 @@
       updateBoardColumns();
     }
 
-    function syncSettingsUI() {
-      difficultySelect.value = currentDifficulty;
-      difficultyStart.value = currentDifficulty;
-      soundSelect.value = soundEnabled ? "on" : "off";
-      soundStart.value = soundEnabled ? "on" : "off";
-    }
-
-    function applySettings(fromStart = false) {
-      currentDifficulty = fromStart ? difficultyStart.value : difficultySelect.value;
-      soundEnabled = (fromStart ? soundStart.value : soundSelect.value) === "on";
-      syncSettingsUI();
-    }
-
     function restartGame() {
       stopTimer();
       deck = createDeck();
       firstCard = null;
       secondCard = null;
       lockBoard = false;
+      started = false;
+      gameEnabled = true;
       moves = 0;
       matches = 0;
       score = 0;
-      seconds = 0;
-      started = false;
-      gameEnabled = true;
-      timeEl.textContent = "00:00";
+      combo = 0;
+      maxCombo = 0;
+      seconds = getInitialTime();
+      timeEl.textContent = formatTime(seconds);
       messageEl.textContent = "Clique em uma carta para começar.";
       feedbackBadge.className = "feedback";
       renderBoard();
@@ -1139,13 +1163,13 @@
       restartGame();
     });
 
+    configBtn.addEventListener("click", () => {
+      startScreen.classList.remove("hidden");
+    });
+
     restartBtn.addEventListener("click", () => {
       applySettings(false);
       restartGame();
-    });
-
-    reopenStartBtn.addEventListener("click", () => {
-      startScreen.classList.remove("hidden");
     });
 
     playAgainBtn.addEventListener("click", () => {
@@ -1153,7 +1177,7 @@
       restartGame();
     });
 
-    closeWinBtn.addEventListener("click", () => {
+    closeResultBtn.addEventListener("click", () => {
       winModal.classList.add("hidden");
     });
 
@@ -1161,18 +1185,20 @@
       applySettings(false);
       restartGame();
     });
-
-    soundSelect.addEventListener("change", () => {
+    modeSelect.addEventListener("change", () => {
       applySettings(false);
+      restartGame();
+    });
+    soundSelect.addEventListener("change", () => applySettings(false));
+    playerName.addEventListener("change", () => {
+      applySettings(false);
+      updateStats();
     });
 
-    difficultyStart.addEventListener("change", () => {
-      applySettings(true);
-    });
-
-    soundStart.addEventListener("change", () => {
-      applySettings(true);
-    });
+    difficultyStart.addEventListener("change", () => applySettings(true));
+    modeStart.addEventListener("change", () => applySettings(true));
+    soundStart.addEventListener("change", () => applySettings(true));
+    playerNameStart.addEventListener("change", () => applySettings(true));
 
     window.addEventListener("resize", updateBoardColumns);
 
@@ -1180,6 +1206,8 @@
     renderRanking();
     deck = createDeck();
     renderBoard();
+    seconds = getInitialTime();
+    timeEl.textContent = formatTime(seconds);
     updateStats();
   </script>
 </body>
