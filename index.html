@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jogo da Memória - Springfield</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, #87ceeb 0%, #bde9ff 50%, #ffe08a 100%);
+      min-height: 100vh;
+      color: #222;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .header {
+      background: rgba(255,255,255,0.94);
+      border: 4px solid #ffd90f;
+      border-radius: 24px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    }
+
+    .title {
+      margin: 0 0 8px;
+      font-size: 2.2rem;
+      font-weight: 900;
+    }
+
+    .subtitle {
+      margin: 0 0 16px;
+      font-size: 1rem;
+    }
+
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .pill {
+      background: #fff;
+      border: 2px solid #7dd3fc;
+      border-radius: 14px;
+      padding: 10px 14px;
+      font-weight: bold;
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+
+    .primary {
+      background: #ffd90f;
+      border: none;
+      border-radius: 14px;
+      padding: 12px 18px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+    }
+
+    .primary:hover {
+      transform: translateY(-1px);
+    }
+
+    .message {
+      margin-top: 16px;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    .board {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 14px;
+    }
+
+    .card {
+      height: 160px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      perspective: 1000px;
+      padding: 0;
+    }
+
+    .card:disabled {
+      cursor: default;
+    }
+
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.55s;
+      transform-style: preserve-3d;
+    }
+
+    .card.flipped .card-inner,
+    .card.matched .card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .card-face {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 4px solid #7dd3fc;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+    }
+
+    .card-front {
+      background: linear-gradient(180deg, #7dd3fc, #fde68a);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 44px;
+    }
+
+    .card-back {
+      transform: rotateY(180deg);
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-back img {
+      width: 100%;
+      height: 118px;
+      object-fit: cover;
+      background: #fff7cc;
+    }
+
+    .card-name {
+      padding: 8px;
+      font-size: 12px;
+      font-weight: bold;
+      text-align: center;
+      min-height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .footer-note {
+      margin-top: 24px;
+      background: rgba(255,255,255,0.92);
+      border: 3px solid #ffd90f;
+      border-radius: 20px;
+      padding: 16px;
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 640px) {
+      .title {
+        font-size: 1.7rem;
+      }
+
+      .card {
+        height: 145px;
+      }
+
+      .card-back img {
+        height: 105px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <section class="header">
+      <h1 class="title">Jogo da Memória - Springfield</h1>
+      <p class="subtitle">Tema visual inspirado no universo dos Simpsons.</p>
+
+      <div class="stats">
+        <div class="pill">Jogadas: <span id="moves">0</span></div>
+        <div class="pill">Pares: <span id="matches">0</span>/20</div>
+        <div class="pill">Tempo: <span id="time">00:00</span></div>
+      </div>
+
+      <div class="actions">
+        <button class="primary" id="restartBtn">Reiniciar jogo</button>
+      </div>
+
+      <div class="message" id="message"></div>
+    </section>
+
+    <section class="board" id="board"></section>
+
+    <section class="footer-note">
+      Esta versão usa imagens temporárias. Depois você pode substituir pelos links das imagens que desejar utilizar.
+    </section>
+  </div>
+
+  <script>
+    const characters = [
+      { id: 1, name: "Homer", image: "https://placehold.co/300x300?text=Homer" },
+      { id: 2, name: "Marge", image: "https://placehold.co/300x300?text=Marge" },
+      { id: 3, name: "Bart", image: "https://placehold.co/300x300?text=Bart" },
+      { id: 4, name: "Lisa", image: "https://placehold.co/300x300?text=Lisa" },
+      { id: 5, name: "Maggie", image: "https://placehold.co/300x300?text=Maggie" },
+      { id: 6, name: "Ned Flanders", image: "https://placehold.co/300x300?text=Ned" },
+      { id: 7, name: "Milhouse", image: "https://placehold.co/300x300?text=Milhouse" },
+      { id: 8, name: "Moe", image: "https://placehold.co/300x300?text=Moe" },
+      { id: 9, name: "Barney", image: "https://placehold.co/300x300?text=Barney" },
+      { id: 10, name: "Apu", image: "https://placehold.co/300x300?text=Apu" },
+      { id: 11, name: "Krusty", image: "https://placehold.co/300x300?text=Krusty" },
+      { id: 12, name: "Mr. Burns", image: "https://placehold.co/300x300?text=Burns" },
+      { id: 13, name: "Smithers", image: "https://placehold.co/300x300?text=Smithers" },
+      { id: 14, name: "Chief Wiggum", image: "https://placehold.co/300x300?text=Wiggum" },
+      { id: 15, name: "Ralph", image: "https://placehold.co/300x300?text=Ralph" },
+      { id: 16, name: "Comic Book Guy", image: "https://placehold.co/300x300?text=Comic+Book+Guy" },
+      { id: 17, name: "Skinner", image: "https://placehold.co/300x300?text=Skinner" },
+      { id: 18, name: "Nelson", image: "https://placehold.co/300x300?text=Nelson" },
+      { id: 19, name: "Otto", image: "https://placehold.co/300x300?text=Otto" },
+      { id: 20, name: "Willie", image: "https://placehold.co/300x300?text=Willie" }
+    ];
+
+    const board = document.getElementById("board");
+    const movesEl = document.getElementById("moves");
+    const matchesEl = document.getElementById("matches");
+    const timeEl = document.getElementById("time");
+    const messageEl = document.getElementById("message");
+    const restartBtn = document.getElementById("restartBtn");
+
+    let deck = [];
+    let firstCard = null;
+    let secondCard = null;
+    let lockBoard = false;
+    let moves = 0;
+    let matches = 0;
+    let seconds = 0;
+    let timer = null;
+    let started = false;
+
+    function shuffle(array) {
+      const cloned = [...array];
+      for (let i = cloned.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [cloned[i], cloned[j]] = [cloned[j], cloned[i]];
+      }
+      return cloned;
+    }
+
+    function formatTime(totalSeconds) {
+      const min = String(Math.floor(totalSeconds / 60)).padStart(2, "0");
+      const sec = String(totalSeconds % 60).padStart(2, "0");
+      return `${min}:${sec}`;
+    }
+
+    function startTimer() {
+      if (timer) return;
+      timer = setInterval(() => {
+        seconds++;
+        timeEl.textContent = formatTime(seconds);
+      }, 1000);
+    }
+
+    function stopTimer() {
+      clearInterval(timer);
+      timer = null;
+    }
+
+    function playTone(frequency = 440, duration = 0.12, type = "sine", volume = 0.04) {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtx) return;
+
+      if (!window._audioCtx) {
+        window._audioCtx = new AudioCtx();
+      }
+
+      const ctx = window._audioCtx;
+      const oscillator = ctx.createOscillator();
+      const gainNode = ctx.createGain();
+
+      oscillator.type = type;
+      oscillator.frequency.setValueAtTime(frequency, ctx.currentTime);
+      gainNode.gain.setValueAtTime(volume, ctx.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
+
+      oscillator.connect(gainNode);
+      gainNode.connect(ctx.destination);
+
+      oscillator.start();
+      oscillator.stop(ctx.currentTime + duration);
+    }
+
+    function soundFlip() {
+      playTone(520, 0.08, "triangle", 0.03);
+    }
+
+    function soundMatch() {
+      playTone(660, 0.09, "sine", 0.05);
+      setTimeout(() => playTone(880, 0.12, "sine", 0.05), 80);
+    }
+
+    function soundMismatch() {
+      playTone(220, 0.12, "sawtooth", 0.03);
+      setTimeout(() => playTone(180, 0.16, "sawtooth", 0.025), 70);
+    }
+
+    function soundWin() {
+      playTone(523, 0.1, "triangle", 0.04);
+      setTimeout(() => playTone(659, 0.1, "triangle", 0.04), 100);
+      setTimeout(() => playTone(784, 0.16, "triangle", 0.05), 200);
+    }
+
+    function createDeck() {
+      return shuffle(
+        characters.flatMap(character => [
+          {
+            uid: `${character.id}-a`,
+            pairId: character.id,
+            name: character.name,
+            image: character.image,
+            matched: false
+          },
+          {
+            uid: `${character.id}-b`,
+            pairId: character.id,
+            name: character.name,
+            image: character.image,
+            matched: false
+          }
+        ])
+      );
+    }
+
+    function updateStats() {
+      movesEl.textContent = moves;
+      matchesEl.textContent = matches;
+    }
+
+    function resetSelection() {
+      firstCard = null;
+      secondCard = null;
+      lockBoard = false;
+    }
+
+    function checkWin() {
+      if (matches === characters.length) {
+        stopTimer();
+        messageEl.textContent = `Parabéns. Você concluiu em ${moves} jogadas e ${formatTime(seconds)}.`;
+        soundWin();
+      }
+    }
+
+    function handleCardClick(cardElement, cardData) {
+      if (lockBoard) return;
+      if (cardElement.classList.contains("flipped")) return;
+      if (cardElement.classList.contains("matched")) return;
+
+      if (!started) {
+        started = true;
+        startTimer();
+      }
+
+      soundFlip();
+      cardElement.classList.add("flipped");
+
+      if (!firstCard) {
+        firstCard = { element: cardElement, data: cardData };
+        return;
+      }
+
+      secondCard = { element: cardElement, data: cardData };
+      lockBoard = true;
+      moves++;
+      updateStats();
+
+      const isMatch = firstCard.data.pairId === secondCard.data.pairId;
+
+      if (isMatch) {
+        firstCard.element.classList.add("matched");
+        secondCard.element.classList.add("matched");
+        matches++;
+        updateStats();
+        soundMatch();
+        resetSelection();
+        checkWin();
+      } else {
+        soundMismatch();
+        setTimeout(() => {
+          firstCard.element.classList.remove("flipped");
+          secondCard.element.classList.remove("flipped");
+          resetSelection();
+        }, 900);
+      }
+    }
+
+    function createCard(cardData) {
+      const button = document.createElement("button");
+      button.className = "card";
+      button.innerHTML = `
+        <div class="card-inner">
+          <div class="card-face card-front">☁️</div>
+          <div class="card-face card-back">
+            <img src="${cardData.image}" alt="${cardData.name}">
+            <div class="card-name">${cardData.name}</div>
+          </div>
+        </div>
+      `;
+
+      button.addEventListener("click", () => handleCardClick(button, cardData));
+      return button;
+    }
+
+    function renderBoard() {
+      board.innerHTML = "";
+      deck.forEach(card => {
+        board.appendChild(createCard(card));
+      });
+    }
+
+    function restartGame() {
+      stopTimer();
+      deck = createDeck();
+      firstCard = null;
+      secondCard = null;
+      lockBoard = false;
+      moves = 0;
+      matches = 0;
+      seconds = 0;
+      started = false;
+      timeEl.textContent = "00:00";
+      messageEl.textContent = "";
+      updateStats();
+      renderBoard();
+    }
+
+    restartBtn.addEventListener("click", restartGame);
+
+    restartGame();
+  </script>
+</body>
+</html>
