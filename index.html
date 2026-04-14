@@ -424,9 +424,6 @@
       width: 100%;
       height: 134px;
       object-fit: contain;
-      object-position: center;
-      background: transparent;
-      padding: 6px;
     }
 
     .card-name {
@@ -970,26 +967,26 @@
 
   <script>
     const characters = [
-      { id: 1, name: "Alpha", image: "https://api.dicebear.com/7.x/adventurer/svg?seed=Alpha" },
-      { id: 2, name: "Beta", image: "https://api.dicebear.com/7.x/adventurer/svg?seed=Beta" },
-      { id: 3, name: "Gamma", image: "https://api.dicebear.com/7.x/adventurer/svg?seed=Gamma" },
-      { id: 4, name: "Delta", image: "https://api.dicebear.com/7.x/adventurer/svg?seed=Delta" },
-      { id: 5, name: "Epsilon", image: "https://api.dicebear.com/7.x/adventurer/svg?seed=Epsilon" },
-      { id: 6, name: "Zeta", image: "https://api.dicebear.com/7.x/adventurer/svg?seed=Zeta" },
-      { id: 7, name: "Eta", image: "https://api.dicebear.com/7.x/adventurer/svg?seed=Eta" },
-      { id: 8, name: "Theta", image: "https://api.dicebear.com/7.x/adventurer/svg?seed=Theta" },
-      { id: 9, name: "Iota", image: "https://api.dicebear.com/7.x/adventurer/svg?seed=Iota" },
-      { id: 10, name: "Kappa", image: "https://api.dicebear.com/7.x/adventurer/svg?seed=Kappa" },
-      { id: 11, name: "Lambda", image: "https://api.dicebear.com/7.x/adventurer/svg?seed=Lambda" },
-      { id: 12, name: "Mu", image: "https://api.dicebear.com/7.x/adventurer/svg?seed=Mu" },
-      { id: 13, name: "Nu", image: "https://api.dicebear.com/7.x/adventurer/svg?seed=Nu" },
-      { id: 14, name: "Xi", image: "https://api.dicebear.com/7.x/adventurer/svg?seed=Xi" },
-      { id: 15, name: "Omicron", image: "https://api.dicebear.com/7.x/adventurer/svg?seed=Omicron" },
-      { id: 16, name: "Pi", image: "https://api.dicebear.com/7.x/adventurer/svg?seed=Pi" },
-      { id: 17, name: "Rho", image: "https://api.dicebear.com/7.x/adventurer/svg?seed=Rho" },
-      { id: 18, name: "Sigma", image: "https://api.dicebear.com/7.x/adventurer/svg?seed=Sigma" },
-      { id: 19, name: "Tau", image: "https://api.dicebear.com/7.x/adventurer/svg?seed=Tau" },
-      { id: 20, name: "Omega", image: "https://api.dicebear.com/7.x/adventurer/svg?seed=Omega" }
+      { id: 1, name: "Hero Fire", image: "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Fire" },
+      { id: 2, name: "Hero Ice", image: "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Ice" },
+      { id: 3, name: "Hero Thunder", image: "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Thunder" },
+      { id: 4, name: "Hero Earth", image: "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Earth" },
+      { id: 5, name: "Hero Wind", image: "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Wind" },
+      { id: 6, name: "Hero Shadow", image: "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Shadow" },
+      { id: 7, name: "Hero Light", image: "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Light" },
+      { id: 8, name: "Hero Metal", image: "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Metal" },
+      { id: 9, name: "Hero Poison", image: "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Poison" },
+      { id: 10, name: "Hero Psychic", image: "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Psychic" },
+      { id: 11, name: "Hero Dragon", image: "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Dragon" },
+      { id: 12, name: "Hero Beast", image: "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Beast" },
+      { id: 13, name: "Hero Ninja", image: "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Ninja" },
+      { id: 14, name: "Hero Robot", image: "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Robot" },
+      { id: 15, name: "Hero Alien", image: "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Alien" },
+      { id: 16, name: "Hero Knight", image: "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Knight" },
+      { id: 17, name: "Hero Wizard", image: "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Wizard" },
+      { id: 18, name: "Hero Pirate", image: "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Pirate" },
+      { id: 19, name: "Hero Zombie", image: "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Zombie" },
+      { id: 20, name: "Hero Ghost", image: "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Ghost" }
     ];
 
       const gameRules = {
@@ -1419,13 +1416,13 @@
       const button = document.createElement("button");
       button.className = "card";
       button.type = "button";
-      button.setAttribute("aria-label", `Carta do personagem ${cardData.name}`);
+      button.setAttribute("aria-label", `Carta do personagem ${cardData.name.replace("Hero ", "")}`);
       button.innerHTML = `
         <div class="card-inner">
           <div class="card-face card-front">☁️</div>
           <div class="card-face card-back">
-            <img src="${cardData.image}" alt="${cardData.name}" onerror="this.src='https://placehold.co/400x400/fde68a/111827?text=${encodeURIComponent(cardData.name)}'">
-            <div class="card-name">${cardData.name}</div>
+            <img src="${cardData.image}" alt="${cardData.name.replace("Hero ", "")}" onerror="this.src='https://placehold.co/400x400/fde68a/111827?text=${encodeURIComponent(cardData.name)}'">
+            <div class="card-name">${cardData.name.replace("Hero ", "")}</div>
           </div>
         </div>
       `;
