@@ -3,9 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Brain Match Game 🐾</title>
+  <title>Brain Match Game</title>
   <style>
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     :root {
       --yellow: #ffd90f;
@@ -35,13 +37,15 @@
     }
 
     body {
-      background:
-        radial-gradient(circle at 20% 20%, #38bdf8, transparent 40%),
-        radial-gradient(circle at 80% 80%, #22c55e, transparent 40%),
-        #0f172a;
+  background:
+    radial-gradient(circle at 20% 20%, #38bdf8, transparent 40%),
+    radial-gradient(circle at 80% 80%, #22c55e, transparent 40%),
+    #0f172a;
     }
 
-    button, input, select { font: inherit; }
+    button, input, select {
+      font: inherit;
+    }
 
     .page {
       min-height: 100vh;
@@ -84,8 +88,17 @@
       flex-shrink: 0;
     }
 
-    .brand-title { font-size: 1.1rem; font-weight: 900; line-height: 1.05; }
-    .brand-subtitle { font-size: 0.8rem; color: var(--muted); margin-top: 3px; }
+    .brand-title {
+      font-size: 1.1rem;
+      font-weight: 900;
+      line-height: 1.05;
+    }
+
+    .brand-subtitle {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 3px;
+    }
 
     .hero {
       position: relative;
@@ -110,7 +123,10 @@
         radial-gradient(circle at 70% 18%, rgba(255,255,255,0.84) 0 7%, transparent 8%);
     }
 
-    .hero-inner { position: relative; z-index: 1; }
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+    }
 
     .hero-grid {
       display: grid;
@@ -191,23 +207,56 @@
       min-height: 46px;
     }
 
-    .btn:hover { transform: translateY(-1px); }
-    .btn:active { transform: translateY(0); }
+    .btn:hover {
+      transform: translateY(-1px);
+    }
 
-    .btn-primary { background: var(--yellow); color: #111827; }
-    .btn-primary:hover { background: var(--yellow-strong); }
-    .btn-secondary { background: var(--sky); color: #0f172a; }
-    .btn-secondary:hover { background: var(--sky-strong); }
-    .btn-ghost { background: #eef6ff; color: #0f172a; }
+    .btn:active {
+      transform: translateY(0);
+    }
 
-    .side-panel, .panel, .board-shell {
+    .btn-primary {
+      background: var(--yellow);
+      color: #111827;
+    }
+
+    .btn-primary:hover {
+      background: var(--yellow-strong);
+    }
+
+    .btn-secondary {
+      background: var(--sky);
+      color: #0f172a;
+    }
+
+    .btn-secondary:hover {
+      background: var(--sky-strong);
+    }
+
+    .btn-ghost {
+      background: #eef6ff;
+      color: #0f172a;
+    }
+
+    .side-panel,
+    .panel,
+    .board-shell {
       background: rgba(255,255,255,0.9);
       border-radius: var(--radius-lg);
       box-shadow: var(--shadow-md);
     }
 
-    .side-panel { border: 2px solid var(--sky); padding: 16px; }
-    .side-panel h2, .panel h3 { margin: 0 0 10px; font-size: 1rem; font-weight: 900; }
+    .side-panel {
+      border: 2px solid var(--sky);
+      padding: 16px;
+    }
+
+    .side-panel h2,
+    .panel h3 {
+      margin: 0 0 10px;
+      font-size: 1rem;
+      font-weight: 900;
+    }
 
     .inline-controls {
       display: grid;
@@ -216,11 +265,21 @@
       margin-top: 10px;
     }
 
-    .field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 0;
+    }
 
-    .field label { font-size: 0.8rem; color: var(--muted); font-weight: 800; }
+    .field label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      font-weight: 800;
+    }
 
-    .field input, .field select {
+    .field input,
+    .field select {
       border: 2px solid #bae6fd;
       border-radius: 14px;
       padding: 10px 12px;
@@ -239,8 +298,13 @@
       font-weight: 800;
     }
 
-    .rules .positive { color: var(--green); }
-    .rules .negative { color: var(--red); }
+    .rules .positive {
+      color: var(--green);
+    }
+
+    .rules .negative {
+      color: var(--red);
+    }
 
     .live-row {
       display: flex;
@@ -264,7 +328,10 @@
       box-shadow: var(--shadow-md);
     }
 
-    .feedback.show { opacity: 1; transform: translateY(0); }
+    .feedback.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
     .feedback.success {
       background: rgba(22,163,74,0.14);
@@ -278,7 +345,11 @@
       color: #7f1d1d;
     }
 
-    .message { font-weight: 800; color: #374151; flex: 1 1 220px; }
+    .message {
+      font-weight: 800;
+      color: #374151;
+      flex: 1 1 220px;
+    }
 
     .board-shell {
       margin-top: 20px;
@@ -304,7 +375,9 @@
       width: 100%;
     }
 
-    .card[disabled] { cursor: default; }
+    .card[disabled] {
+      cursor: default;
+    }
 
     .card-inner {
       width: 100%;
@@ -315,7 +388,9 @@
     }
 
     .card.flipped .card-inner,
-    .card.matched .card-inner { transform: rotateY(180deg); }
+    .card.matched .card-inner {
+      transform: rotateY(180deg);
+    }
 
     .card-face {
       position: absolute;
@@ -345,56 +420,37 @@
       background: radial-gradient(circle at top, #38bdf8, #0f172a);
     }
 
-    /* Layout específico para cartas de animal com emoji */
-    .card-back-animal {
-      justify-content: center;
-      align-items: center;
-      gap: 6px;
-      padding-bottom: 8px;
-    }
-
-    .animal-emoji {
-      font-size: 4rem;
-      line-height: 1;
-      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.30));
-      transition: transform 0.2s ease;
-    }
-
-    .card.matched .animal-emoji {
-      animation: animalBounce 0.5s ease;
-    }
-
-    @keyframes animalBounce {
-      0%   { transform: scale(1); }
-      40%  { transform: scale(1.18) rotate(-6deg); }
-      70%  { transform: scale(1.10) rotate(4deg); }
-      100% { transform: scale(1) rotate(0deg); }
+    .card-back img {
+      width: 100%;
+      height: 134px;
+      object-fit: contain;
     }
 
     .card-name {
-      min-height: 32px;
+      min-height: 40px;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 4px 10px;
-      font-size: 12px;
-      font-weight: 900;
-      line-height: 1.2;
-      background: rgba(255,255,255,0.92);
-      border-radius: 10px;
-      color: #1f2937;
-      width: calc(100% - 16px);
+      padding: 6px 8px;
+      font-size: 11px;
+      font-weight: 800;
+      line-height: 1.15;
+      background: #fff;
     }
 
-    .card.matched { animation: matchPulse 0.38s ease; }
+    .card.matched {
+      animation: matchPulse 0.38s ease;
+    }
 
     .card.matched .card-face {
       border-color: #22c55e;
       box-shadow: 0 12px 24px rgba(34, 197, 94, 0.22);
     }
 
-    .card.error { animation: shake 0.32s ease; }
+    .card.error {
+      animation: shake 0.32s ease;
+    }
 
     @keyframes matchPulse {
       0% { transform: scale(1); }
@@ -415,8 +471,17 @@
       gap: 18px;
     }
 
-    .panel { border: 3px solid var(--yellow); padding: 16px; }
-    .panel p, .panel li { margin: 0; color: var(--muted); line-height: 1.5; }
+    .panel {
+      border: 3px solid var(--yellow);
+      padding: 16px;
+    }
+
+    .panel p,
+    .panel li {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.5;
+    }
 
     .rank-list {
       list-style: none;
@@ -438,9 +503,15 @@
       font-weight: 800;
     }
 
-    .rank-item small { display: block; color: var(--muted); font-weight: 700; margin-top: 3px; }
+    .rank-item small {
+      display: block;
+      color: var(--muted);
+      font-weight: 700;
+      margin-top: 3px;
+    }
 
-    .overlay, .modal {
+    .overlay,
+    .modal {
       position: fixed;
       inset: 0;
       z-index: 30;
@@ -451,9 +522,12 @@
       background: rgba(15,23,42,0.58);
     }
 
-    .hidden { display: none; }
+    .hidden {
+      display: none;
+    }
 
-    .overlay-card, .modal-card {
+    .overlay-card,
+    .modal-card {
       width: min(860px, 100%);
       background: rgba(255,255,255,0.97);
       border: 4px solid var(--yellow);
@@ -465,20 +539,38 @@
       overflow: auto;
     }
 
-    .overlay-card h2, .modal-card h2 {
+    .overlay-card h2,
+    .modal-card h2 {
       margin: 0 0 12px;
       font-size: clamp(1.9rem, 3vw, 2.7rem);
       line-height: 1;
       font-weight: 900;
     }
 
-    .overlay-card p, .modal-card p { margin: 0; line-height: 1.55; color: var(--muted); }
+    .overlay-card p,
+    .modal-card p {
+      margin: 0;
+      line-height: 1.55;
+      color: var(--muted);
+    }
 
-    .start-grid, .summary-grid { display: grid; gap: 12px; margin: 22px 0; }
-    .start-grid { grid-template-columns: repeat(3, 1fr); }
-    .summary-grid { grid-template-columns: repeat(5, 1fr); }
+    .start-grid,
+    .summary-grid {
+      display: grid;
+      gap: 12px;
+      margin: 22px 0;
+    }
 
-    .start-card, .summary-card {
+    .start-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .summary-grid {
+      grid-template-columns: repeat(5, 1fr);
+    }
+
+    .start-card,
+    .summary-card {
       background: #f8fafc;
       border: 2px solid #bae6fd;
       border-radius: 18px;
@@ -486,81 +578,176 @@
       box-shadow: var(--shadow-md);
     }
 
-    .start-card strong, .summary-card strong {
+    .start-card strong,
+    .summary-card strong {
       display: block;
       margin-top: 5px;
       font-size: 1.15rem;
       overflow-wrap: anywhere;
     }
 
-    .tiny-note { margin-top: 14px; font-size: 0.9rem; color: var(--muted); }
-
-    /* Modal de confirmação de reinício */
-    .confirm-modal {
-      position: fixed;
-      inset: 0;
-      z-index: 50;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 18px;
-      background: rgba(15,23,42,0.72);
+    .tiny-note {
+      margin-top: 14px;
+      font-size: 0.9rem;
+      color: var(--muted);
     }
-
-    .confirm-card {
-      width: min(420px, 100%);
-      background: rgba(255,255,255,0.98);
-      border: 4px solid var(--yellow);
-      border-radius: 24px;
-      padding: 24px;
-      box-shadow: var(--shadow-lg);
-      text-align: center;
-    }
-
-    .confirm-card h3 { margin: 0 0 10px; font-size: 1.3rem; font-weight: 900; }
-    .confirm-card p { margin: 0 0 20px; color: var(--muted); line-height: 1.5; }
-    .confirm-card .toolbar { justify-content: center; margin-top: 0; }
 
     @media (max-width: 1180px) {
-      .hero-grid, .footer { grid-template-columns: 1fr; }
-      .stats { grid-template-columns: repeat(3, minmax(120px, 1fr)); }
+      .hero-grid,
+      .footer {
+        grid-template-columns: 1fr;
+      }
+
+      .stats {
+        grid-template-columns: repeat(3, minmax(120px, 1fr));
+      }
     }
 
     @media (max-width: 900px) {
-      .page { padding: 14px; }
-      .hero, .board-shell, .panel, .side-panel { padding: 16px; }
-      .board { grid-template-columns: repeat(4, minmax(110px, 1fr)); gap: 12px; }
-      .card { height: 164px; }
-      .animal-emoji { font-size: 3.2rem; }
-      .summary-grid { grid-template-columns: repeat(2, 1fr); }
+      .page {
+        padding: 14px;
+      }
+
+      .hero, .board-shell, .panel, .side-panel {
+        padding: 16px;
+      }
+
+      .board {
+        grid-template-columns: repeat(4, minmax(110px, 1fr));
+        gap: 12px;
+      }
+
+      .card {
+        height: 164px;
+      }
+
+      .card-back img {
+        height: 118px;
+      }
+
+      .summary-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
 
     @media (max-width: 768px) {
-      .start-grid, .inline-controls { grid-template-columns: 1fr; }
-      .stats { grid-template-columns: repeat(2, minmax(120px, 1fr)); }
-      .board { grid-template-columns: repeat(3, minmax(92px, 1fr)); }
-      .card { height: 182px; border: none; padding: 0; background: transparent; cursor: pointer; perspective: 1000px; position: relative; width: 100%; }
-      .animal-emoji { font-size: 3rem; }
-      .toolbar { flex-direction: column; align-items: stretch; }
-      .btn { width: 100%; }
-      .brand { width: 100%; border-radius: 22px; }
+      .start-grid,
+      .inline-controls {
+        grid-template-columns: 1fr;
+      }
+
+      .stats {
+        grid-template-columns: repeat(2, minmax(120px, 1fr));
+      }
+
+      .board {
+        grid-template-columns: repeat(3, minmax(92px, 1fr));
+      }
+
+      .card {
+          height: 182px;
+          border: none;
+          padding: 0;
+          background: transparent;
+          cursor: pointer;
+          perspective: 1000px;
+          position: relative;
+          width: 100%;
+      }
+
+      .card-back img {
+        height: 108px;
+      }
+
+      .toolbar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .brand {
+        width: 100%;
+        border-radius: 22px;
+      }
     }
 
     @media (max-width: 520px) {
-      .page { padding: 8px; }
-      .hero { padding: 10px; }
-      .subtitle, .rules, .footer, .side-panel { display: none; }
-      .stats { grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 10px; }
-      .stat-card { min-height: 58px; padding: 8px 6px; border-radius: 12px; }
-      .stat-label { font-size: 0.58rem; margin-bottom: 4px; }
-      .stat-value { font-size: 0.9rem; }
-      .toolbar { gap: 6px; margin-top: 8px; }
-      .btn { min-height: 38px; padding: 8px 10px; font-size: 0.8rem; }
-      .board-shell { margin-top: 10px; padding: 8px; }
-      .board { grid-template-columns: repeat(4, 1fr); gap: 6px; }
-      .card { height: calc((100vh - 260px) / 3); min-height: 82px; max-height: 120px; }
-      .animal-emoji { font-size: 2.4rem; }
-      .card-name { min-height: 24px; font-size: 8px; padding: 2px 6px; }
+      .page {
+        padding: 8px;
+      }
+    
+      .hero {
+        padding: 10px;
+      }
+    
+      .subtitle,
+      .rules,
+      .footer,
+      .side-panel {
+        display: none;
+      }
+    
+      .stats {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6px;
+        margin-top: 10px;
+      }
+    
+      .stat-card {
+        min-height: 58px;
+        padding: 8px 6px;
+        border-radius: 12px;
+      }
+    
+      .stat-label {
+        font-size: 0.58rem;
+        margin-bottom: 4px;
+      }
+    
+      .stat-value {
+        font-size: 0.9rem;
+      }
+    
+      .toolbar {
+        gap: 6px;
+        margin-top: 8px;
+      }
+    
+      .btn {
+        min-height: 38px;
+        padding: 8px 10px;
+        font-size: 0.8rem;
+      }
+    
+      .board-shell {
+        margin-top: 10px;
+        padding: 8px;
+      }
+    
+      .board {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 6px;
+      }
+    
+      .card {
+        height: calc((100vh - 260px) / 3);
+        min-height: 82px;
+        max-height: 120px;
+      }
+    
+      .card-back img {
+        height: calc(100% - 28px);
+        padding: 4px;
+      }
+    
+      .card-name {
+        min-height: 28px;
+        font-size: 9px;
+        padding: 2px 4px;
+      }
     }
   </style>
 </head>
@@ -569,23 +756,18 @@
     <source src="bg-music_I.mp3" type="audio/mpeg">
   </audio>
 
-  <!-- Tela de início -->
   <div class="overlay" id="startScreen">
     <div class="overlay-card">
-      <h2>Brain Match Game 🐾</h2>
+      <h2>Brain Match Game Premium</h2>
       <p>
-        Encontre os pares de animais! Versão com música ambiente, ranking local,
-        combo, dificuldade e modo contra o tempo. Interface adaptada para celular e tablet.
+        Versão premium com música ambiente, ranking local com nome do jogador,
+        combo, dificuldade, modo contra o tempo com tempo por dificuldade e interface adaptada para celular e tablet.
       </p>
 
       <div class="start-grid">
-        <!--
-          FIX IL-01: descrição do combo corrigida para refletir a fórmula real:
-          bônus = (combo - 1) × 2, acumulativo a partir do 2º acerto consecutivo.
-        -->
         <div class="start-card">Acerto<strong style="color:#166534;">+5 pontos</strong></div>
-        <div class="start-card">Erro<strong style="color:#991b1b;">-1 ponto (mín. 0)</strong></div>
-        <div class="start-card">Combo<strong>bônus acumulativo: x2=+2, x3=+4, xN=+(N-1)×2</strong></div>
+        <div class="start-card">Erro<strong style="color:#991b1b;">-1 ponto</strong></div>
+        <div class="start-card">Combo<strong>bônus por sequência</strong></div>
       </div>
 
       <div class="inline-controls" style="text-align:left; margin-bottom: 16px;">
@@ -621,17 +803,10 @@
       </div>
 
       <button class="btn btn-primary" id="startBtn">Iniciar jogo</button>
-      <!--
-        FIX IC-03: nota atualizada para refletir ajuste proporcional de tempo no mobile.
-      -->
-      <div class="tiny-note">
-        No modo contra o tempo — Desktop: Fácil 2 min, Médio 3 min, Difícil 4 min.
-        No celular o tempo é ajustado proporcionalmente ao número de pares exibidos.
-      </div>
+      <div class="tiny-note">No modo contra o tempo: Fácil = 2 min, Médio = 3 min, Difícil = 4 min.</div>
     </div>
   </div>
 
-  <!-- Modal de resultado -->
   <div class="modal hidden" id="winModal">
     <div class="modal-card">
       <h2 id="resultTitle">Resultado final</h2>
@@ -652,28 +827,14 @@
     </div>
   </div>
 
-  <!--
-    FIX IU-01: modal de confirmação de reinício para evitar descarte acidental de partida.
-  -->
-  <div class="confirm-modal hidden" id="confirmModal">
-    <div class="confirm-card">
-      <h3>⚠️ Reiniciar partida?</h3>
-      <p>Há uma partida em andamento. O progresso atual será perdido. Deseja continuar?</p>
-      <div class="toolbar">
-        <button class="btn btn-primary" id="confirmYesBtn">Sim, reiniciar</button>
-        <button class="btn btn-ghost" id="confirmNoBtn">Cancelar</button>
-      </div>
-    </div>
-  </div>
-
   <div class="page">
     <div class="container">
       <div class="topbar">
         <div class="brand">
-          <div class="brand-icon">🐾</div>
+          <div class="brand-icon">☁️</div>
           <div>
             <div class="brand-title">Brain Match Game</div>
-            <div class="brand-subtitle">Edição Animais 🐾</div>
+            <div class="brand-subtitle">Dashboard premium</div>
           </div>
         </div>
       </div>
@@ -682,10 +843,9 @@
         <div class="hero-inner">
           <div class="hero-grid">
             <div>
-              <h1>Encontre os pares de animais! 🐾</h1>
+              <h1>Encontre os pares e maximize sua pontuação</h1>
               <p class="subtitle">
-                Cada acerto vale 5 pontos. Erros retiram 1 ponto (mínimo 0).
-                Sequências de acertos aumentam o combo e adicionam bônus acumulativo.
+                Cada acerto vale 5 pontos. Erros retiram 1 ponto. Sequências de acertos aumentam o combo e adicionam bônus.
               </p>
 
               <div class="stats">
@@ -693,22 +853,27 @@
                   <div class="stat-label">Jogador</div>
                   <div class="stat-value" id="playerDisplay">Visitante</div>
                 </div>
+
                 <div class="stat-card">
                   <div class="stat-label">Jogadas</div>
                   <div class="stat-value" id="moves">0</div>
                 </div>
+
                 <div class="stat-card">
                   <div class="stat-label">Pares</div>
                   <div class="stat-value"><span id="matches">0</span>/<span id="totalPairs">20</span></div>
                 </div>
+
                 <div class="stat-card">
                   <div class="stat-label">Tempo</div>
                   <div class="stat-value" id="time">00:00</div>
                 </div>
+
                 <div class="stat-card">
                   <div class="stat-label">Pontos</div>
                   <div class="stat-value" id="score">0</div>
                 </div>
+
                 <div class="stat-card">
                   <div class="stat-label">Combo</div>
                   <div class="stat-value" id="combo">x0</div>
@@ -717,23 +882,16 @@
 
               <div class="toolbar">
                 <button class="btn btn-primary" id="restartBtn">Reiniciar</button>
-                <!--
-                  FIX IU-02: rótulo corrigido de "Configurações" para "Nova partida",
-                  refletindo o comportamento real do botão (reabre a tela inicial).
-                -->
-                <button class="btn btn-secondary" id="configBtn">Nova partida</button>
+                <button class="btn btn-secondary" id="configBtn">Configurações</button>
                 <button class="btn btn-ghost" id="toggleMusicBtn">🔊 Música</button>
               </div>
 
-              <!--
-                FIX IL-01: descrição de combo corrigida para refletir a fórmula real.
-              -->
               <div class="rules">
                 Regras:
                 <span class="positive">+5 por acerto</span> |
-                <span class="negative">-1 por erro (mín. 0)</span> |
+                <span class="negative">-1 por erro</span> |
                 bônus de combo =
-                <span class="positive">acumulativo: x2 +2, x3 +4, xN +(N-1)×2</span>
+                <span class="positive">+2 por acerto consecutivo após o primeiro</span>
               </div>
 
               <div class="live-row">
@@ -750,6 +908,7 @@
                   <label for="playerName">Nome</label>
                   <input id="playerName" maxlength="18" placeholder="Nome do jogador" />
                 </div>
+
                 <div class="field">
                   <label for="difficultySelect">Dificuldade</label>
                   <select id="difficultySelect">
@@ -758,6 +917,7 @@
                     <option value="hard">Difícil</option>
                   </select>
                 </div>
+
                 <div class="field">
                   <label for="modeSelect">Modo</label>
                   <select id="modeSelect">
@@ -765,6 +925,7 @@
                     <option value="timed">Contra o tempo</option>
                   </select>
                 </div>
+
                 <div class="field">
                   <label for="soundSelect">Som e música</label>
                   <select id="soundSelect">
@@ -774,13 +935,9 @@
                 </div>
               </div>
 
-              <!--
-                FIX IC-03: nota atualizada para refletir ajuste proporcional de tempo no mobile.
-              -->
               <div class="rules">
-                No modo contra o tempo o tempo varia por dificuldade:
+                No modo contra o tempo, o tempo varia por dificuldade:
                 Fácil (2 min), Médio (3 min), Difícil (4 min).
-                No celular, o tempo é reduzido proporcionalmente aos pares exibidos.
               </div>
             </aside>
           </div>
@@ -799,6 +956,7 @@
             O próximo salto seria usar imagens e sons próprios e um ranking online compartilhado.
           </p>
         </div>
+
         <div class="panel">
           <h3>Top 10 local</h3>
           <ul class="rank-list" id="rankingList"></ul>
@@ -808,136 +966,115 @@
   </div>
 
   <script>
-    /*
-     * Personagens substituídos por animais com emoji nativo.
-     * Vantagens: sem dependência de API externa, compatível com todos os dispositivos,
-     * visual fofo e universalmente reconhecível para todas as idades.
-     * O campo "image" foi substituído por "emoji" — renderizado via CSS/HTML puro.
-     */
     const characters = [
-      { id:  1, name: "Cachorro",    emoji: "🐶" },
-      { id:  2, name: "Gato",        emoji: "🐱" },
-      { id:  3, name: "Hamster",     emoji: "🐹" },
-      { id:  4, name: "Coelho",      emoji: "🐰" },
-      { id:  5, name: "Raposa",      emoji: "🦊" },
-      { id:  6, name: "Urso",        emoji: "🐻" },
-      { id:  7, name: "Panda",       emoji: "🐼" },
-      { id:  8, name: "Koala",       emoji: "🐨" },
-      { id:  9, name: "Tigre",       emoji: "🐯" },
-      { id: 10, name: "Leão",        emoji: "🦁" },
-      { id: 11, name: "Vaca",        emoji: "🐮" },
-      { id: 12, name: "Porco",       emoji: "🐷" },
-      { id: 13, name: "Sapo",        emoji: "🐸" },
-      { id: 14, name: "Macaco",      emoji: "🐵" },
-      { id: 15, name: "Pinguim",     emoji: "🐧" },
-      { id: 16, name: "Pato",        emoji: "🦆" },
-      { id: 17, name: "Coruja",      emoji: "🦉" },
-      { id: 18, name: "Unicórnio",   emoji: "🦄" },
-      { id: 19, name: "Dragão",      emoji: "🐲" },
-      { id: 20, name: "Borboleta",   emoji: "🦋" }
+      { id: 1, name: "Hero Fire", image: "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Fire" },
+      { id: 2, name: "Hero Ice", image: "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Ice" },
+      { id: 3, name: "Hero Thunder", image: "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Thunder" },
+      { id: 4, name: "Hero Earth", image: "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Earth" },
+      { id: 5, name: "Hero Wind", image: "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Wind" },
+      { id: 6, name: "Hero Shadow", image: "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Shadow" },
+      { id: 7, name: "Hero Light", image: "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Light" },
+      { id: 8, name: "Hero Metal", image: "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Metal" },
+      { id: 9, name: "Hero Poison", image: "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Poison" },
+      { id: 10, name: "Hero Psychic", image: "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Psychic" },
+      { id: 11, name: "Hero Dragon", image: "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Dragon" },
+      { id: 12, name: "Hero Beast", image: "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Beast" },
+      { id: 13, name: "Hero Ninja", image: "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Ninja" },
+      { id: 14, name: "Hero Robot", image: "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Robot" },
+      { id: 15, name: "Hero Alien", image: "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Alien" },
+      { id: 16, name: "Hero Knight", image: "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Knight" },
+      { id: 17, name: "Hero Wizard", image: "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Wizard" },
+      { id: 18, name: "Hero Pirate", image: "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Pirate" },
+      { id: 19, name: "Hero Zombie", image: "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Zombie" },
+      { id: 20, name: "Hero Ghost", image: "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Ghost" }
     ];
 
-    /*
-     * FIX IC-01: gameRules é agora a única fonte de verdade para pontuação e tempo.
-     * FIX IC-02: objeto duplicado timedSecondsByDifficulty removido.
-     *            gameRules.timeByDifficulty é a única referência de tempo.
-     */
-    const gameRules = {
-      matchPoints:  5,
-      errorPoints: -1,
-      comboBonus:   2,
-      timeByDifficulty: {
-        easy:   120,
-        medium: 180,
-        hard:   240
-      }
+      const gameRules = {
+        matchPoints: 5,
+        errorPoints: -1,
+        comboBonus: 2,
+        timeByDifficulty: {
+          easy: 120,
+          medium: 180,
+          hard: 240
+        }
     };
 
     const difficultyConfig = {
-      easy:   { pairs: 10 },
+      easy: { pairs: 10 },
       medium: { pairs: 15 },
-      hard:   { pairs: 20 }
+      hard: { pairs: 20 }
     };
 
-    /* Pares reduzidos no mobile para caber na tela */
-    const mobilePairsConfig = {
-      easy:   6,
-      medium: 8,
-      hard:   10
+    const timedSecondsByDifficulty = {
+      easy: 120,
+      medium: 180,
+      hard: 240
     };
 
-    // ── Referências DOM ──────────────────────────────────────────────────────
-    const board         = document.getElementById("board");
-    const rankingList   = document.getElementById("rankingList");
-    const movesEl       = document.getElementById("moves");
-    const matchesEl     = document.getElementById("matches");
-    const totalPairsEl  = document.getElementById("totalPairs");
-    const timeEl        = document.getElementById("time");
-    const scoreEl       = document.getElementById("score");
-    const comboEl       = document.getElementById("combo");
+    const board = document.getElementById("board");
+    const rankingList = document.getElementById("rankingList");
+    const movesEl = document.getElementById("moves");
+    const matchesEl = document.getElementById("matches");
+    const totalPairsEl = document.getElementById("totalPairs");
+    const timeEl = document.getElementById("time");
+    const scoreEl = document.getElementById("score");
+    const comboEl = document.getElementById("combo");
     const playerDisplay = document.getElementById("playerDisplay");
-    const messageEl     = document.getElementById("message");
+    const messageEl = document.getElementById("message");
     const feedbackBadge = document.getElementById("feedbackBadge");
 
-    const startScreen      = document.getElementById("startScreen");
-    const startBtn         = document.getElementById("startBtn");
-    const configBtn        = document.getElementById("configBtn");
-    const confirmModal     = document.getElementById("confirmModal");
-    const confirmYesBtn    = document.getElementById("confirmYesBtn");
-    const confirmNoBtn     = document.getElementById("confirmNoBtn");
+    const startScreen = document.getElementById("startScreen");
+    const startBtn = document.getElementById("startBtn");
+    const configBtn = document.getElementById("configBtn");
 
-    const playerNameStart  = document.getElementById("playerNameStart");
-    const difficultyStart  = document.getElementById("difficultyStart");
-    const modeStart        = document.getElementById("modeStart");
-    const soundStart       = document.getElementById("soundStart");
+    const playerNameStart = document.getElementById("playerNameStart");
+    const difficultyStart = document.getElementById("difficultyStart");
+    const modeStart = document.getElementById("modeStart");
+    const soundStart = document.getElementById("soundStart");
 
-    const playerName       = document.getElementById("playerName");
+    const playerName = document.getElementById("playerName");
     const difficultySelect = document.getElementById("difficultySelect");
-    const modeSelect       = document.getElementById("modeSelect");
-    const soundSelect      = document.getElementById("soundSelect");
+    const modeSelect = document.getElementById("modeSelect");
+    const soundSelect = document.getElementById("soundSelect");
 
-    const restartBtn       = document.getElementById("restartBtn");
-    const toggleMusicBtn   = document.getElementById("toggleMusicBtn");
-    const bgMusic          = document.getElementById("bgMusic");
+    const restartBtn = document.getElementById("restartBtn");
+    const toggleMusicBtn = document.getElementById("toggleMusicBtn");
+    const bgMusic = document.getElementById("bgMusic");
 
-    const winModal         = document.getElementById("winModal");
-    const playAgainBtn     = document.getElementById("playAgainBtn");
-    const closeResultBtn   = document.getElementById("closeResultBtn");
-    const resultTitle      = document.getElementById("resultTitle");
-    const resultText       = document.getElementById("resultText");
-    const finalPlayer      = document.getElementById("finalPlayer");
-    const finalMoves       = document.getElementById("finalMoves");
-    const finalScore       = document.getElementById("finalScore");
-    const finalTime        = document.getElementById("finalTime");
-    const finalCombo       = document.getElementById("finalCombo");
+    const winModal = document.getElementById("winModal");
+    const playAgainBtn = document.getElementById("playAgainBtn");
+    const closeResultBtn = document.getElementById("closeResultBtn");
+    const resultTitle = document.getElementById("resultTitle");
+    const resultText = document.getElementById("resultText");
+    const finalPlayer = document.getElementById("finalPlayer");
+    const finalMoves = document.getElementById("finalMoves");
+    const finalScore = document.getElementById("finalScore");
+    const finalTime = document.getElementById("finalTime");
+    const finalCombo = document.getElementById("finalCombo");
 
-    // ── Estado do jogo ───────────────────────────────────────────────────────
-    let deck              = [];
-    let activeCharacters  = [];
-    let firstCard         = null;
-    let secondCard        = null;
-    let lockBoard         = false;
-    let started           = false;
-    let gameEnabled       = false;
-    let moves             = 0;
-    let matches           = 0;
-    let score             = 0;
-    let combo             = 0;
-    let maxCombo          = 0;
-    let seconds           = 0;
-    let timer             = null;
-    let soundEnabled      = true;
-    let musicOn           = true;
+    let deck = [];
+    let activeCharacters = [];
+    let firstCard = null;
+    let secondCard = null;
+    let lockBoard = false;
+    let started = false;
+    let gameEnabled = false;
+    let moves = 0;
+    let matches = 0;
+    let score = 0;
+    let combo = 0;
+    let maxCombo = 0;
+    let seconds = 0;
+    let timer = null;
+    let soundEnabled = true;
+    let musicOn = true;
     let currentDifficulty = "medium";
-    let currentMode       = "classic";
-    let currentPlayer     = "Visitante";
-
-    /* Callback pendente para confirmação de reinício */
-    let pendingRestartCallback = null;
+    let currentMode = "classic";
+    let currentPlayer = "Visitante";
 
     bgMusic.volume = 0.10;
 
-    // ── Utilitários ──────────────────────────────────────────────────────────
     function shuffle(array) {
       const cloned = [...array];
       for (let i = cloned.length - 1; i > 0; i--) {
@@ -948,7 +1085,7 @@
     }
 
     function isMobile() {
-      return window.innerWidth <= 520;
+  return window.innerWidth <= 520;
     }
 
     function formatTime(totalSeconds) {
@@ -958,46 +1095,55 @@
     }
 
     function getTotalPairs() {
-      if (isMobile()) return mobilePairsConfig[currentDifficulty];
-      return difficultyConfig[currentDifficulty].pairs;
+        if (isMobile()) {
+    const mobilePairs = {
+      easy: 6,
+      medium: 8,
+      hard: 10
+    };
+    return mobilePairs[currentDifficulty];
+  }
+
+  return difficultyConfig[currentDifficulty].pairs;
     }
 
     function getSelectedCharacters() {
       return characters.slice(0, getTotalPairs());
     }
 
-    /*
-     * FIX IC-03: no mobile o tempo é reduzido proporcionalmente ao número de pares,
-     * mantendo a relação segundos/par equivalente ao desktop.
-     * FIX IC-01 + IC-02: usa gameRules.timeByDifficulty como única fonte de tempo.
-     */
     function getInitialTime() {
       if (currentMode !== "timed") return 0;
-      const baseTime  = gameRules.timeByDifficulty[currentDifficulty];
-      if (isMobile()) {
-        const basePairs   = difficultyConfig[currentDifficulty].pairs;
-        const mobilePairs = mobilePairsConfig[currentDifficulty];
-        return Math.round(baseTime * (mobilePairs / basePairs));
-      }
-      return baseTime;
+      return timedSecondsByDifficulty[currentDifficulty];
     }
 
     function updateBoardColumns() {
-      if (window.innerWidth <= 520) { board.style.gridTemplateColumns = "repeat(4, 1fr)"; return; }
-      if (window.innerWidth <= 900) { board.style.gridTemplateColumns = "repeat(4, minmax(110px, 1fr))"; return; }
+      if (window.innerWidth <= 520) {
+        board.style.gridTemplateColumns = "repeat(4, 1fr)";
+        return;
+      }
+    
+      if (window.innerWidth <= 768) {
+        board.style.gridTemplateColumns = "repeat(4, 1fr)";
+        return;
+      }
+    
+      if (window.innerWidth <= 900) {
+        board.style.gridTemplateColumns = "repeat(4, 1fr)";
+        return;
+      }
+    
       board.style.gridTemplateColumns = "repeat(5, minmax(120px, 1fr))";
     }
 
     function updateStats() {
-      movesEl.textContent      = moves;
-      matchesEl.textContent    = matches;
+      movesEl.textContent = moves;
+      matchesEl.textContent = matches;
       totalPairsEl.textContent = getTotalPairs();
-      scoreEl.textContent      = score;
-      comboEl.textContent      = `x${combo}`;
+      scoreEl.textContent = score;
+      comboEl.textContent = `x${combo}`;
       playerDisplay.textContent = currentPlayer;
     }
 
-    // ── Temporizador ─────────────────────────────────────────────────────────
     function startTimer() {
       if (timer) return;
       timer = setInterval(() => {
@@ -1022,7 +1168,6 @@
       timer = null;
     }
 
-    // ── Áudio ────────────────────────────────────────────────────────────────
     function playTone(frequency = 440, duration = 0.12, type = "sine", volume = 0.04) {
       if (!soundEnabled) return;
       const AudioCtx = window.AudioContext || window.webkitAudioContext;
@@ -1031,8 +1176,8 @@
       const ctx = window._audioCtx;
       if (ctx.state === "suspended") ctx.resume();
       const oscillator = ctx.createOscillator();
-      const gainNode   = ctx.createGain();
-      oscillator.type  = type;
+      const gainNode = ctx.createGain();
+      oscillator.type = type;
       oscillator.frequency.setValueAtTime(frequency, ctx.currentTime);
       gainNode.gain.setValueAtTime(volume, ctx.currentTime);
       gainNode.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
@@ -1042,10 +1187,20 @@
       oscillator.stop(ctx.currentTime + duration);
     }
 
-    function soundFlip()     { playTone(520, 0.08, "triangle", 0.03); }
-    function soundMatch()    { playTone(660, 0.09, "sine", 0.05); setTimeout(() => playTone(880, 0.11, "sine", 0.05), 80); }
-    function soundMismatch() { playTone(220, 0.12, "sawtooth", 0.03); setTimeout(() => playTone(180, 0.16, "sawtooth", 0.025), 70); }
-    function soundWin()      { playTone(523, 0.1, "triangle", 0.04); setTimeout(() => playTone(659, 0.1, "triangle", 0.04), 100); setTimeout(() => playTone(784, 0.16, "triangle", 0.05), 200); }
+    function soundFlip() { playTone(520, 0.08, "triangle", 0.03); }
+    function soundMatch() {
+      playTone(660, 0.09, "sine", 0.05);
+      setTimeout(() => playTone(880, 0.11, "sine", 0.05), 80);
+    }
+    function soundMismatch() {
+      playTone(220, 0.12, "sawtooth", 0.03);
+      setTimeout(() => playTone(180, 0.16, "sawtooth", 0.025), 70);
+    }
+    function soundWin() {
+      playTone(523, 0.1, "triangle", 0.04);
+      setTimeout(() => playTone(659, 0.1, "triangle", 0.04), 100);
+      setTimeout(() => playTone(784, 0.16, "triangle", 0.05), 200);
+    }
 
     function updateMusicButton() {
       toggleMusicBtn.textContent = musicOn ? "🔊 Música" : "🔇 Música";
@@ -1064,76 +1219,53 @@
     function toggleMusic() {
       musicOn = !musicOn;
       updateMusicButton();
-      if (musicOn && soundEnabled) bgMusic.play().catch(() => {});
-      else bgMusic.pause();
+      if (musicOn && soundEnabled) {
+        bgMusic.play().catch(() => {});
+      } else {
+        bgMusic.pause();
+      }
     }
 
-    // ── Feedback visual ──────────────────────────────────────────────────────
     function showFeedback(type, text) {
       feedbackBadge.className = `feedback ${type} show`;
       feedbackBadge.textContent = text;
       setTimeout(() => feedbackBadge.classList.remove("show"), 900);
     }
 
-    // ── Confirmação de reinício ──────────────────────────────────────────────
-    /*
-     * FIX IU-01: toda ação de reinício que ocorra com partida em andamento
-     * passa por esta função antes de executar o callback.
-     */
-    function requestRestart(callback) {
-      if (started && gameEnabled) {
-        pendingRestartCallback = callback;
-        confirmModal.classList.remove("hidden");
-      } else {
-        callback();
-      }
-    }
-
-    confirmYesBtn.addEventListener("click", () => {
-      confirmModal.classList.add("hidden");
-      if (pendingRestartCallback) { pendingRestartCallback(); pendingRestartCallback = null; }
-    });
-
-    confirmNoBtn.addEventListener("click", () => {
-      confirmModal.classList.add("hidden");
-      pendingRestartCallback = null;
-    });
-
-    // ── Lógica do deck ───────────────────────────────────────────────────────
     function createDeck() {
       activeCharacters = getSelectedCharacters();
       return shuffle(activeCharacters.flatMap((character) => [
-        { uid: `${character.id}-a`, pairId: character.id, name: character.name, emoji: character.emoji },
-        { uid: `${character.id}-b`, pairId: character.id, name: character.name, emoji: character.emoji }
+        { uid: `${character.id}-a`, pairId: character.id, name: character.name, image: character.image },
+        { uid: `${character.id}-b`, pairId: character.id, name: character.name, image: character.image }
       ]));
     }
 
-    // ── Sincronização de settings ────────────────────────────────────────────
     function syncSettingsUI() {
-      playerName.value      = currentPlayer === "Visitante" ? "" : currentPlayer;
+      playerName.value = currentPlayer === "Visitante" ? "" : currentPlayer;
       playerNameStart.value = currentPlayer === "Visitante" ? "" : currentPlayer;
       difficultySelect.value = currentDifficulty;
-      difficultyStart.value  = currentDifficulty;
+      difficultyStart.value = currentDifficulty;
       modeSelect.value = currentMode;
-      modeStart.value  = currentMode;
+      modeStart.value = currentMode;
       soundSelect.value = soundEnabled ? "on" : "off";
-      soundStart.value  = soundEnabled ? "on" : "off";
+      soundStart.value = soundEnabled ? "on" : "off";
       updateMusicButton();
     }
 
     function applySettings(fromStart = false) {
-      const nameValue   = (fromStart ? playerNameStart.value : playerName.value).trim();
-      currentPlayer     = nameValue || "Visitante";
+      const nameValue = (fromStart ? playerNameStart.value : playerName.value).trim();
+      currentPlayer = nameValue || "Visitante";
       currentDifficulty = fromStart ? difficultyStart.value : difficultySelect.value;
-      currentMode       = fromStart ? modeStart.value       : modeSelect.value;
-      soundEnabled      = (fromStart ? soundStart.value : soundSelect.value) === "on";
-      if (!soundEnabled) bgMusic.pause();
+      currentMode = fromStart ? modeStart.value : modeSelect.value;
+      soundEnabled = (fromStart ? soundStart.value : soundSelect.value) === "on";
+      if (!soundEnabled) {
+        bgMusic.pause();
+      }
       syncSettingsUI();
     }
 
-    // ── Ranking ──────────────────────────────────────────────────────────────
     function renderRanking() {
-      const items = JSON.parse(localStorage.getItem("brain-match-game-ranking") || "[]");
+      const items = JSON.parse(localStorage.getItem("springfield-memory-ranking-premium") || "[]");
       rankingList.innerHTML = "";
       if (!items.length) {
         rankingList.innerHTML = `<li class="rank-item"><div>Nenhuma pontuação ainda<small>Jogue para popular o ranking</small></div><strong>--</strong></li>`;
@@ -1142,22 +1274,10 @@
       items.forEach((item, index) => {
         const li = document.createElement("li");
         li.className = "rank-item";
-        /*
-         * FIX IL-02: exibe o resultado de forma discriminada para vitórias
-         * clássicas e cronometradas, além da derrota por tempo.
-         */
-        let resultLabel = "";
-        if (item.result === "lose") {
-          resultLabel = " · tempo esgotado";
-        } else if (item.mode === "timed") {
-          resultLabel = " · vitória cronometrada";
-        } else {
-          resultLabel = " · vitória clássica";
-        }
         li.innerHTML = `
           <div>
             #${index + 1} · ${item.player}
-            <small>${item.difficulty} · ${item.mode} · ${item.moves} jogadas · ${formatTime(item.time)}${resultLabel}</small>
+            <small>${item.difficulty} · ${item.mode} · ${item.moves} jogadas · ${formatTime(item.time)}${item.result === 'lose' ? ' · tempo esgotado' : ''}</small>
           </div>
           <strong>${item.score}</strong>
         `;
@@ -1166,18 +1286,18 @@
     }
 
     function saveRanking(result) {
-      const key   = "brain-match-game-ranking";
+      const key = "springfield-memory-ranking-premium";
       const items = JSON.parse(localStorage.getItem(key) || "[]");
       items.push({
-        player:     currentPlayer,
+        player: currentPlayer,
         difficulty: currentDifficulty,
-        mode:       currentMode,
+        mode: currentMode,
         moves,
-        time:  currentMode === "timed" ? (getInitialTime() - seconds) : seconds,
+        time: currentMode === "timed" ? (getInitialTime() - seconds) : seconds,
         score,
         combo: maxCombo,
         result,
-        date:  new Date().toLocaleDateString("pt-BR")
+        date: new Date().toLocaleDateString("pt-BR")
       });
       items.sort((a, b) => {
         if (b.score !== a.score) return b.score - a.score;
@@ -1188,15 +1308,14 @@
       renderRanking();
     }
 
-    // ── Modal de resultado ───────────────────────────────────────────────────
     function openResultModal(title, text) {
-      resultTitle.textContent  = title;
-      resultText.textContent   = text;
-      finalPlayer.textContent  = currentPlayer;
-      finalMoves.textContent   = moves;
-      finalScore.textContent   = score;
-      finalTime.textContent    = formatTime(currentMode === "timed" ? (getInitialTime() - seconds) : seconds);
-      finalCombo.textContent   = maxCombo;
+      resultTitle.textContent = title;
+      resultText.textContent = text;
+      finalPlayer.textContent = currentPlayer;
+      finalMoves.textContent = moves;
+      finalScore.textContent = score;
+      finalTime.textContent = formatTime(currentMode === "timed" ? (getInitialTime() - seconds) : seconds);
+      finalCombo.textContent = maxCombo;
       winModal.classList.remove("hidden");
     }
 
@@ -1218,13 +1337,15 @@
     }
 
     function checkWin() {
-      if (matches === getTotalPairs()) endGame(true);
+      if (matches === getTotalPairs()) {
+        endGame(true);
+      }
     }
 
     function resetSelection() {
-      firstCard  = null;
+      firstCard = null;
       secondCard = null;
-      lockBoard  = false;
+      lockBoard = false;
     }
 
     function markErrorAnimation(...elements) {
@@ -1234,7 +1355,6 @@
       });
     }
 
-    // ── Lógica de clique na carta ────────────────────────────────────────────
     function handleCardClick(cardElement, cardData) {
       if (!gameEnabled || lockBoard) return;
       if (cardElement.classList.contains("flipped") || cardElement.classList.contains("matched")) return;
@@ -1254,7 +1374,7 @@
       }
 
       secondCard = { element: cardElement, data: cardData };
-      lockBoard  = true;
+      lockBoard = true;
       moves++;
       updateStats();
 
@@ -1266,34 +1386,22 @@
         matches++;
         combo++;
         if (combo > maxCombo) maxCombo = combo;
-
-        /*
-         * FIX IC-01: pontuação e bônus de combo calculados via gameRules,
-         * eliminando os magic numbers da lógica.
-         */
-        const comboBonus = combo > 1 ? (combo - 1) * gameRules.comboBonus : 0;
-        score += gameRules.matchPoints + comboBonus;
-
+        const comboBonus = combo > 1 ? (combo - 1) * 2 : 0;
+        score += 5 + comboBonus;
         updateStats();
         messageEl.textContent = comboBonus > 0
           ? `Excelente! Combo x${combo} gerou bônus de +${comboBonus}.`
           : "Boa! Você encontrou um par.";
-        showFeedback("success", comboBonus > 0
-          ? `Acerto! +${gameRules.matchPoints + comboBonus} pontos`
-          : `Acerto! +${gameRules.matchPoints} pontos`);
+        showFeedback("success", comboBonus > 0 ? `Acerto! +${5 + comboBonus} pontos` : "Acerto! +5 pontos");
         soundMatch();
         resetSelection();
         checkWin();
       } else {
-        /*
-         * FIX IC-01: desconto via gameRules.errorPoints.
-         * FIX IC-04: piso de 0 aplicado — score nunca assume valor negativo.
-         */
-        score = Math.max(0, score + gameRules.errorPoints);
+        score -= 1;
         combo = 0;
         updateStats();
         messageEl.textContent = "Não foi dessa vez. Continue tentando.";
-        showFeedback("error", `Erro! ${gameRules.errorPoints} ponto`);
+        showFeedback("error", "Erro! -1 ponto");
         soundMismatch();
         markErrorAnimation(firstCard.element, secondCard.element);
         setTimeout(() => {
@@ -1304,22 +1412,17 @@
       }
     }
 
-    // ── Renderização ─────────────────────────────────────────────────────────
     function createCard(cardData) {
       const button = document.createElement("button");
       button.className = "card";
       button.type = "button";
-      button.setAttribute("aria-label", `Carta do animal ${cardData.name}`);
-      /*
-       * Card back agora exibe emoji nativo em tamanho grande + nome do animal.
-       * Sem dependência de API de imagem externa — renderização 100% offline.
-       */
+      button.setAttribute("aria-label", `Carta do personagem ${cardData.name.replace("Hero ", "")}`);
       button.innerHTML = `
         <div class="card-inner">
-          <div class="card-face card-front">❓</div>
-          <div class="card-face card-back card-back-animal">
-            <div class="animal-emoji">${cardData.emoji}</div>
-            <div class="card-name">${cardData.name}</div>
+          <div class="card-face card-front">☁️</div>
+          <div class="card-face card-back">
+            <img src="${cardData.image}" alt="${cardData.name.replace("Hero ", "")}" onerror="this.src='https://placehold.co/400x400/fde68a/111827?text=${encodeURIComponent(cardData.name)}'">
+            <div class="card-name">${cardData.name.replace("Hero ", "")}</div>
           </div>
         </div>
       `;
@@ -1336,19 +1439,19 @@
     function restartGame() {
       stopTimer();
       stopMusic();
-      deck        = createDeck();
-      firstCard   = null;
-      secondCard  = null;
-      lockBoard   = false;
-      started     = false;
+      deck = createDeck();
+      firstCard = null;
+      secondCard = null;
+      lockBoard = false;
+      started = false;
       gameEnabled = true;
-      moves       = 0;
-      matches     = 0;
-      score       = 0;
-      combo       = 0;
-      maxCombo    = 0;
-      seconds     = getInitialTime();
-      timeEl.textContent    = formatTime(seconds);
+      moves = 0;
+      matches = 0;
+      score = 0;
+      combo = 0;
+      maxCombo = 0;
+      seconds = getInitialTime();
+      timeEl.textContent = formatTime(seconds);
       messageEl.textContent = "Clique em uma carta para começar.";
       feedbackBadge.className = "feedback";
       renderBoard();
@@ -1357,35 +1460,24 @@
       updateMusicButton();
     }
 
-    // ── Event listeners ──────────────────────────────────────────────────────
     startBtn.addEventListener("click", () => {
       applySettings(true);
       startScreen.classList.add("hidden");
       restartGame();
     });
 
-    /*
-     * FIX IU-02: botão renomeado para "Nova partida" — reabre a tela de início.
-     * FIX IU-01: confirmação solicitada se houver partida em andamento.
-     */
     configBtn.addEventListener("click", () => {
-      requestRestart(() => {
-        stopTimer();
-        stopMusic();
-        gameEnabled = false;
-        started     = false;
-        startScreen.classList.remove("hidden");
-      });
+      startScreen.classList.remove("hidden");
     });
 
     restartBtn.addEventListener("click", () => {
-      requestRestart(() => {
-        applySettings(false);
-        restartGame();
-      });
+      applySettings(false);
+      restartGame();
     });
 
-    toggleMusicBtn.addEventListener("click", toggleMusic);
+    toggleMusicBtn.addEventListener("click", () => {
+      toggleMusic();
+    });
 
     playAgainBtn.addEventListener("click", () => {
       winModal.classList.add("hidden");
@@ -1396,16 +1488,14 @@
       winModal.classList.add("hidden");
     });
 
-    /*
-     * FIX IU-01: mudanças nos selects do painel lateral também passam
-     * pela confirmação de reinício quando há partida em andamento.
-     */
     difficultySelect.addEventListener("change", () => {
-      requestRestart(() => { applySettings(false); restartGame(); });
+      applySettings(false);
+      restartGame();
     });
 
     modeSelect.addEventListener("change", () => {
-      requestRestart(() => { applySettings(false); restartGame(); });
+      applySettings(false);
+      restartGame();
     });
 
     soundSelect.addEventListener("change", () => {
@@ -1420,20 +1510,16 @@
     });
 
     difficultyStart.addEventListener("change", () => applySettings(true));
-    modeStart.addEventListener("change",       () => applySettings(true));
-    soundStart.addEventListener("change",      () => applySettings(true));
+    modeStart.addEventListener("change", () => applySettings(true));
+    soundStart.addEventListener("change", () => applySettings(true));
     playerNameStart.addEventListener("change", () => applySettings(true));
 
     window.addEventListener("resize", updateBoardColumns);
 
-    // ── Inicialização ────────────────────────────────────────────────────────
-    /*
-     * FIX IL-03: o tabuleiro não é mais renderizado com deck descartável no load.
-     * O board permanece vazio até o jogador clicar em "Iniciar jogo".
-     * gameEnabled = false garante que nenhuma interação ocorra antes do início.
-     */
     syncSettingsUI();
     renderRanking();
+    deck = createDeck();
+    renderBoard();
     seconds = getInitialTime();
     timeEl.textContent = formatTime(seconds);
     updateStats();
